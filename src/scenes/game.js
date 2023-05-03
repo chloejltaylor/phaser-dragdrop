@@ -61,13 +61,17 @@ export default class Game extends Phaser.Scene
             this.add.image(700, 450, 'background');
             this.add.text(700, 50, 'Numbers one and two are correct').setFontSize(35).setShadow(3, 3).setOrigin(0.5);
 
-                    //  Create some 'drop zones'
+                    //  Create a 'drop zone'
             this.add.image(target1posX, target1posY, 'target')
 
+        let startX = 100
+        let startY1 = 100
+        let startY2 = 400
+        let startY3 = 700
            
-            let object1 = this.add.image(100, 100, 'idle_1')
-            let object2 = this.add.image(100, 400, 'idle_2')
-            let object3 = this.add.image(100, 700, 'idle_3')
+            let object1 = this.add.image(startX, startY1, 'idle_1')
+            let object2 = this.add.image(startX, startY2, 'idle_2')
+            let object3 = this.add.image(startX, startY3, 'idle_3')
             object1.setInteractive({ draggable: true })
             object2.setInteractive({ draggable: true })
             object3.setInteractive({ draggable: true })
@@ -81,18 +85,19 @@ export default class Game extends Phaser.Scene
         object2.endY = 600
         object3.endX = 100
         object3.endY = 700
+        object1.startX = startX
+        object1.startY = startY1
+        object2.startX = startX
+        object2.startY = startY2
+        object3.startX = startX
+        object3.startY = startY3
         object1.over = false
         object2.over = false
         object1.iscorrect = true
         object2.iscorrect = true
         object3.iscorrect = false
         let numcorrect = 0
-        let totalnumobjects = 2
-        // this.add.spine(512, 650, 'hand', '01_tap', false);
-        // const container = this.add.spineContainer();
-        // container.add(hand);
-
-   
+        let totalnumobjects = 2   
             // this.input.on('dragstart', function () {
     
                 //console.log("off we go")
@@ -102,7 +107,6 @@ export default class Game extends Phaser.Scene
 
         this.input.on('gameobjectover', (pointer, gameObject) =>
         {
-            // console.log(gameObject)
             gameObject.setTexture(gameObject.object[1]);
 
         });
@@ -124,7 +128,7 @@ export default class Game extends Phaser.Scene
 
                 gameObject.setTexture(gameObject.object[0]);
     
-                if ((x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY) && !gameObject.over)
+                if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY) && !gameObject.over)
                 {
                     gameObject.setTexture(gameObject.object[2])
                     gameObject.disableInteractive();
@@ -135,10 +139,25 @@ export default class Game extends Phaser.Scene
                         this.add.spine(512, 650, 'hand', '01_tap', false);
                         this.timedEvent = this.time.delayedCall(2000, this.playGameOver, [], this);
                     }
+                } 
+                else {
+
+                    this.tweens.add({
+                        targets: gameObject,
+                        props: {
+                            x: { value: gameObject.startX, duration: 800 },
+                            y: { value: gameObject.startY, duration: 800 },
+                        },
+                        ease: 'Sine.easeInOut',
+                    });
                 }
                 
   
                 });
+
+
+
+
             }
 
             playGameOver() {
