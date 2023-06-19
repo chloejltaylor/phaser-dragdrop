@@ -1,14 +1,12 @@
 import Phaser from '../lib/phaser.js'
 
 
-export default class Game extends Phaser.Scene
+export default class Bonus extends Phaser.Scene
 {
     timedEvent
-
-
     constructor() 
     {
-    super('game')
+    super('bonus')
     }
 
     init()
@@ -38,7 +36,9 @@ export default class Game extends Phaser.Scene
         this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
         this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
         this.load.spine("pw","./src/assets/char/pw/char_pw.json","./src/assets/char/pw/char_pw.atlas")
-        this.load.spine("pc","./src/assets/char/char_pc.json","./src/assets/Anim/char_pc.atlas")
+        this.load.spine("rc","./src/assets/char/rc/char_rc.json","./src/assets/char/rc/char_rc.atlas")
+        this.load.spine("vet","./src/assets/char/vet/char_vt.json","./src/assets/char/vet/char_vt.atlas")
+
     }
 
     create()
@@ -62,42 +62,38 @@ export default class Game extends Phaser.Scene
         let startY3 = 700
 
         this.add.image(700, 450, 'background');
-        this.add.text(700, 50, 'Number two is correct').setFontSize(35).setShadow(3, 3).setOrigin(0.5);
+        this.add.text(700, 50, 'Number one is correct').setFontSize(35).setShadow(3, 3).setOrigin(0.5);
 
         //  Create a 'drop zone'
         this.add.image(target1posX, target1posY, 'target')
 
-        // Place charatcer
-        const char = this.add.spine(1100, 450, 'pw')
-        const charanims = char.getAnimationList()
-        console.log(charanims[2])
-
-        char.setInteractive().on('pointerdown', pointer =>
-        {
-            char.play(charanims[2], false);
-        });
-
-
-
         // Place draggables           
-        let object1 = this.add.image(startX1, startY1, 'idle_1')
-        let object2 = this.add.image(startX2, startY2, 'idle_2')
-        let object3 = this.add.image(startX3, startY3, 'idle_3')
+        let object1 = this.add.spine(startX1, startY1, 'pw')
+        let object2 = this.add.spine(startX2, startY2, 'rc')
+        let object3 = this.add.spine(startX3, startY3, 'vet')
+
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })
         object3.setInteractive({ draggable: true })
+        const object1anims = object1.getAnimationList()
+        const object2anims = object2.getAnimationList()
+        const object3anims = object3.getAnimationList()
+        object1.play(object1anims[0], true)
+        object2.play(object1anims[0], true)
+        object3.play(object1anims[0], true)
 
-        object1.objectstate = ['idle_1','active_1','correct_1','incorrect_1']
-        object2.objectstate = ['idle_2','active_2','correct_2','incorrect_2']
-        object3.objectstate = ['idle_3','active_3','idle_3','incorrect_3']
+
+        // object1.objectstate = ['idle_1','active_1','correct_1','incorrect_1']
+        // object2.objectstate = ['idle_2','active_2','correct_2','incorrect_2']
+        // object3.objectstate = ['idle_3','active_3','idle_3','incorrect_3']
 
         // Incorrect draggables to be sent back where they started
         // Correct draggables to click to their place in the drop zone
-        object1.endX = startX1
-        object1.endY = startY1
-        object2.endX = 850
-        object2.endY = 300
-        object3.endX = startX2
+        object1.endX = 850
+        object1.endY = 300
+        object2.endX = startX2
+        object2.endY = startY2
+        object3.endX = startX3
         object3.endY = startY3
         object1.startX = startX1
         object1.startY = startY1
@@ -107,8 +103,8 @@ export default class Game extends Phaser.Scene
         object3.startY = startY3
 
         // Choose the correct object
-        object1.iscorrect = false
-        object2.iscorrect = true
+        object1.iscorrect = true
+        object2.iscorrect = false
         object3.iscorrect = false
 
         //initialise the number correct
@@ -144,7 +140,8 @@ export default class Game extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
-                gameObject.setTexture(gameObject.objectstate[2])
+                object1.play(object1anims[3], false);
+                // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();
                 gameObject.x = gameObject.endX
                 gameObject.y = gameObject.endY
@@ -152,10 +149,8 @@ export default class Game extends Phaser.Scene
 
                 // End the round
                 if(numcorrect == totalnumobjects){
-                // Completion animation 
-                    char.play(charanims[3], false);
 
-                // Transition scene
+                    // Transition scene
                     this.timedEvent = this.time.delayedCall(2000, this.playTransition, [], this)
                 }
             } 
@@ -163,7 +158,7 @@ export default class Game extends Phaser.Scene
 
                 this.sound.play('incorrect')
                 // Set draggable back to idle objectstate
-                gameObject.setTexture(gameObject.objectstate[0]);
+                // gameObject.setTexture(gameObject.objectstate[0]);
                 this.tweens.add({
                     targets: gameObject,
                     props: {
@@ -177,7 +172,7 @@ export default class Game extends Phaser.Scene
         }
 
         playTransition() {
-            this.scene.start('intro-bonus')
+            this.scene.start('congratulations')
         }
 
     update()

@@ -1,15 +1,15 @@
 import Phaser from '../lib/phaser.js'
-export default class Title extends Phaser.Scene
+export default class introBonus extends Phaser.Scene
 
 {
 constructor()
 {
-super('title')
+super('intro-bonus')
 }
 
 preload()
 {
-    this.load.image('play', './src/assets/Buttons/play75.png')
+    this.load.image('play', './src/assets/Buttons/play.png')
     this.load.image('background', './src/assets/Game/grid-bg.png')
 }
 
@@ -18,16 +18,17 @@ create()
     const width = this.scale.width
     const height = this.scale.height
 
+
     this.add.image(700, 450, 'background');
 
-    this.add.text(width * 0.5, height * 0.3, 'Drag and Drop', {
+    this.add.text(width * 0.5, height * 0.3, 'Now for a bonus round!', {
     fontSize: 48}).setOrigin(0.5)
 
     this.input.keyboard.once('keydown-SPACE', () => {this.scene.start('game')})
 
-    const start = this.add.image(width * 0.5, height * 0.7, 'play').setScale(1.5).setInteractive()
+    const play = this.add.image(width * 0.5, height * 0.7, 'play').setInteractive()
 
-    start.once('pointerdown', () => {this.scene.start('game')});
+    play.once('pointerdown', () => {this.scene.start('bonus')});
 
 }
 
