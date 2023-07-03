@@ -35,9 +35,9 @@ export default class Bonus extends Phaser.Scene
 
         this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
         this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
-        this.load.spine("pw","./src/assets/char/pw/char_pw.json","./src/assets/char/pw/char_pw.atlas")
-        this.load.spine("rc","./src/assets/char/rc/char_rc.json","./src/assets/char/rc/char_rc.atlas")
-        this.load.spine("vet","./src/assets/char/vet/char_vt.json","./src/assets/char/vet/char_vt.atlas")
+        this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
+        this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
+        this.load.spine("pm","./src/assets/char/pm/char_pm.json","./src/assets/char/pm/char_pm.atlas")
 
     }
 
@@ -68,9 +68,9 @@ export default class Bonus extends Phaser.Scene
         this.add.image(target1posX, target1posY, 'target')
 
         // Place draggables           
-        let object1 = this.add.spine(startX1, startY1, 'pw')
-        let object2 = this.add.spine(startX2, startY2, 'rc')
-        let object3 = this.add.spine(startX3, startY3, 'vet')
+        let object1 = this.add.spine(startX1, startY1, 'po')
+        let object2 = this.add.spine(startX2, startY2, 'ff')
+        let object3 = this.add.spine(startX3, startY3, 'pm')
 
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })

@@ -37,6 +37,7 @@ export default class Game extends Phaser.Scene
 
         this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
         this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
+        this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
         this.load.spine("pw","./src/assets/char/pw/char_pw.json","./src/assets/char/pw/char_pw.atlas")
         this.load.spine("pc","./src/assets/char/char_pc.json","./src/assets/Anim/char_pc.atlas")
     }
@@ -68,9 +69,10 @@ export default class Game extends Phaser.Scene
         this.add.image(target1posX, target1posY, 'target')
 
         // Place charatcer
-        const char = this.add.spine(1100, 450, 'pw')
+        const char = this.add.spine(1100, 450, 'po')
         const charanims = char.getAnimationList()
-        console.log(charanims[2])
+
+        console.log(charanims)
 
         char.setInteractive().on('pointerdown', pointer =>
         {

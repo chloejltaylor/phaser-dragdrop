@@ -1,0 +1,48 @@
+
+char_pm.png
+size: 128,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm
+  rotate: true
+  xy: 41, 176
+  size: 22, 38
+  orig: 22, 38
+  offset: 0, 0
+  index: -1
+head_whole
+  rotate: true
+  xy: 2, 2
+  size: 128, 109
+  orig: 128, 109
+  offset: 0, 0
+  index: -1
+hips
+  rotate: false
+  xy: 81, 171
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: -1
+hips_coverup
+  rotate: false
+  xy: 2, 155
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: -1
+leg
+  rotate: true
+  xy: 2, 184
+  size: 14, 37
+  orig: 14, 37
+  offset: 0, 0
+  index: -1
+torso
+  rotate: true
+  xy: 37, 132
+  size: 37, 44
+  orig: 37, 44
+  offset: 0, 0
+  index: -1

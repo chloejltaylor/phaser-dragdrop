@@ -1,0 +1,76 @@
+
+char_ff.png
+size: 256,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm
+  rotate: true
+  xy: 2, 8
+  size: 24, 37
+  orig: 24, 37
+  offset: 0, 0
+  index: -1
+hair_back
+  rotate: true
+  xy: 132, 55
+  size: 70, 108
+  orig: 70, 108
+  offset: 0, 0
+  index: -1
+head_whole
+  rotate: false
+  xy: 2, 144
+  size: 128, 108
+  orig: 128, 108
+  offset: 0, 0
+  index: -1
+head_whole_helmet
+  rotate: false
+  xy: 2, 34
+  size: 128, 108
+  orig: 128, 108
+  offset: 0, 0
+  index: -1
+helmet
+  rotate: true
+  xy: 132, 127
+  size: 125, 101
+  orig: 125, 101
+  offset: 0, 0
+  index: -1
+helmet_small
+  rotate: false
+  xy: 132, 2
+  size: 61, 51
+  orig: 61, 51
+  offset: 0, 0
+  index: -1
+hips
+  rotate: false
+  xy: 41, 5
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: -1
+hips_coverup
+  rotate: false
+  xy: 76, 5
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: -1
+leg
+  rotate: false
+  xy: 235, 215
+  size: 14, 37
+  orig: 14, 37
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 195, 9
+  size: 37, 44
+  orig: 37, 44
+  offset: 0, 0
+  index: -1
