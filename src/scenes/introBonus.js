@@ -24,7 +24,7 @@ create()
     this.add.text(width * 0.5, height * 0.3, 'Now for a bonus round!', {
     fontSize: 48}).setOrigin(0.5)
 
-    this.input.keyboard.once('keydown-SPACE', () => {this.scene.start('game')})
+    this.input.keyboard.once('keydown-SPACE', () => {this.scene.start('bonus')})
 
     const play = this.add.image(width * 0.5, height * 0.7, 'play').setInteractive()
 
