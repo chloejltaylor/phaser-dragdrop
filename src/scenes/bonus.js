@@ -4,6 +4,13 @@ import Phaser from '../lib/phaser.js'
 export default class Bonus extends Phaser.Scene
 {
     timedEvent
+    vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
+    vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    characters = ['pm', 'ff', 'po']
+    correctItems = ['item4', 'item3', 'item5']
+
+
+
     constructor() 
     {
     super('bonus')
@@ -16,29 +23,6 @@ export default class Bonus extends Phaser.Scene
 
     preload()
     {
-        this.load.image('idle_1', './src/assets/Game/idle_1.png')
-        this.load.image('idle_2', './src/assets/Game/idle_2.png')
-        this.load.image('idle_3', './src/assets/Game/idle_3.png')
-        this.load.image('active_1', './src/assets/Game/active_1.png')
-        this.load.image('active_2', './src/assets/Game/active_2.png')
-        this.load.image('active_3', './src/assets/Game/active_3.png')
-        this.load.image('correct_1', './src/assets/Game/correct_1.png')
-        this.load.image('correct_2', './src/assets/Game/correct_2.png')
-        this.load.image('correct_3', './src/assets/Game/correct_3.png')
-        this.load.image('incorrect_1', './src/assets/Game/incorrect_1.png')
-        this.load.image('incorrect_2', './src/assets/Game/incorrect_2.png')
-        this.load.image('incorrect_3', './src/assets/Game/incorrect_3.png')
-        this.load.image('target', './src/assets/Game/emptybox.png')
-
-        this.load.image('background', './src/assets/Game/grid-bg.png')
-        this.load.image('platform', './src/assets/Environment/ground.png')
-
-        this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
-        this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
-        this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
-        this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
-        this.load.spine("pm","./src/assets/char/pm/char_pm.json","./src/assets/char/pm/char_pm.atlas")
-
         this.load.image('bonus-paramedic', './src/assets/temp/bonus_paramedic-1a.png')
 
 
@@ -81,8 +65,8 @@ export default class Bonus extends Phaser.Scene
         const object2anims = object2.getAnimationList()
         const object3anims = object3.getAnimationList()
         object1.play(object1anims[0], true)
-        object2.play(object1anims[0], true)
-        object3.play(object1anims[0], true)
+        object2.play(object2anims[0], true)
+        object3.play(object3anims[0], true)
 
 
         // object1.objectstate = ['idle_1','active_1','correct_1','incorrect_1']
@@ -106,10 +90,10 @@ export default class Bonus extends Phaser.Scene
 
         // Choose the correct object
         object1.iscorrect = false
-        object2.iscorrect = true
-        object3.iscorrect = false
+        object2.iscorrect = false
+        object3.iscorrect = true
 
-        let correctObject = object2
+        let correctObject = object3
 
         //initialise the number correct
         let numcorrect = 0
@@ -144,7 +128,7 @@ export default class Bonus extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
-                correctObject.play(object1anims[3], false);
+                correctObject.play(object3anims[3], false);
                 // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();
                 gameObject.x = gameObject.endX

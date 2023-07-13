@@ -1,54 +1,38 @@
 import Phaser from '../lib/phaser.js'
+import eventsCenter from './eventscentre.js'
 
-
-export default class level1ff extends Phaser.Scene
+export default class level3 extends Phaser.Scene
 {
     timedEvent
-
+    vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
+    vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    characters = ['pm', 'ff', 'po']
+    correctItems = ['item4', 'item3', 'item5']
 
     constructor() 
     {
-    super('level1pm')
+    super('level3')
     }
 
-    init()
+    init (data)
     {
-    let numcorrect = 0
+        this.vehicle = data.vehicle
+        this.vehicleWin = data.vehicleWin
+        this.char = data.char
+        this.correctItem = data.correctItem
+        console.log(this.correctItem)
+
     }
 
     preload()
     {
-        this.load.image('idle_1', './src/assets/Game/idle_1.png')
-        this.load.image('idle_2', './src/assets/Game/idle_2.png')
-        this.load.image('idle_3', './src/assets/Game/idle_3.png')
-        this.load.image('active_1', './src/assets/Game/active_1.png')
-        this.load.image('active_2', './src/assets/Game/active_2.png')
-        this.load.image('active_3', './src/assets/Game/active_3.png')
-        this.load.image('correct_1', './src/assets/Game/correct_1.png')
-        this.load.image('correct_2', './src/assets/Game/correct_2.png')
-        this.load.image('correct_3', './src/assets/Game/correct_3.png')
-        this.load.image('incorrect_1', './src/assets/Game/incorrect_1.png')
-        this.load.image('incorrect_2', './src/assets/Game/incorrect_2.png')
-        this.load.image('incorrect_3', './src/assets/Game/incorrect_3.png')
-        this.load.image('target', './src/assets/temp/hitzone.png')
-        this.load.image('vehicle', './src/assets/temp/vehicle-1a.png')
-        this.load.image('vehicle-win', './src/assets/temp/vehicle-1b.png')
-        this.load.image('dock', './src/assets/temp/dnd_dock_1.png')
-        this.load.image('item', './src/assets/temp/dnd_item.png')
-
-        this.load.image('background', './src/assets/Game/grid-bg.png')
-        this.load.image('platform', './src/assets/Environment/ground.png')
-
-        this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
-        this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
-        this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
-        this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
-        this.load.spine("pm","./src/assets/char/pm/char_pm.json","./src/assets/char/pm/char_pm.atlas")
+        this.scene.run('level-tracker')
     }
 
     create()
     {
 
+        console.log("level 3")
 
         // Coordinates of the drop zone
         let target1posX = 950
@@ -60,12 +44,10 @@ export default class level1ff extends Phaser.Scene
 
         // Starting positions of the draggables
 
-        let startY1 = 800
-        let startY2 = 800
-        let startY3 = 800
+        let startY = 800
 
-        let startingPositionsX = [400, 700, 1000]
-        console.log(startingPositionsX)
+        let startingPositionsX = [300, 500, 700, 900, 1100]
+        // console.log(startingPositionsX)
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
           }
@@ -74,18 +56,17 @@ export default class level1ff extends Phaser.Scene
         let startX1 = startingPositionsX[0]
         let startX2 = startingPositionsX[1]
         let startX3 = startingPositionsX[2]
+        let startX4 = startingPositionsX[3]
+        let startX5 = startingPositionsX[4]
 
-        this.add.image(700, 450, 'background');
-        // this.add.text(700, 50, 'Number two is correct').setFontSize(35).setShadow(3, 3).setOrigin(0.5);
-        const vehicle = this.add.image(700, 350, 'vehicle')
-
-
+        this.add.image(700, 450, 'background')
+        const vehicle = this.add.image(700, 350, this.vehicle)
 
         // Place charatcer
-        const char = this.add.spine(1200, 550, 'pm')
+        const char = this.add.spine(1200, 550, this.char)
         const charanims = char.getAnimationList()
 
-        console.log(charanims)
+        // console.log(charanims)
 
         char.setInteractive().on('pointerdown', pointer =>
         {
@@ -94,42 +75,59 @@ export default class level1ff extends Phaser.Scene
 
 
         //Place dock
-        let dock = this.add.image(700, 900,'dock')
+        let dock = this.add.image(700, 900,'dock3')
 
 
         // Place draggables           
-        let object1 = this.add.image(startX1, startY1, 'item')
-        let object2 = this.add.image(startX2, startY2, 'item')
-        let object3 = this.add.image(startX3, startY3, 'item')
+        let object1 = this.add.image(startX1, startY, this.correctItem)
+        let object2 = this.add.image(startX2, startY, 'decoy1')
+        let object3 = this.add.image(startX3, startY, 'decoy2')
+        let object4 = this.add.image(startX4, startY, 'decoy3')
+        let object5 = this.add.image(startX5, startY, 'decoy4')
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })
         object3.setInteractive({ draggable: true })
+        object4.setInteractive({ draggable: true })
+        object5.setInteractive({ draggable: true })
 
         // set different textures for different states: IDLE, ACTIVE, CORRECT, INCORRECT
 
-        object1.objectstate = ['item','item','item','item']
-        object2.objectstate = ['item','item','item','item']
-        object3.objectstate = ['item','item','item','item']
+        object1.objectstate = [this.correctItem, this.correctItem,this.correctItem,this.correctItem]
+        object2.objectstate = ['decoy1','decoy1','decoy1','decoy1']
+        object3.objectstate = ['decoy2','decoy2','decoy2','decoy2']
+        object4.objectstate = ['decoy3','decoy3','decoy3','decoy3']
+        object5.objectstate = ['decoy4','decoy4','decoy4','decoy4']
 
         // Incorrect draggables to be sent back where they started
         // Correct draggables to click to their place in the drop zone
         object1.endX = startX1
-        object1.endY = startY1
+        object1.endY = startY
         object2.endX = 950
-        object2.endY = 400
-        object3.endX = startX2
-        object3.endY = startY3
+        object2.endY = startY
+        object3.endX = startX3
+        object3.endY = startY
+        object4.endX = startX4
+        object4.endY = startY
+        object5.endX = startX5
+        object5.endY = startY
+
         object1.startX = startX1
-        object1.startY = startY1
+        object1.startY = startY
         object2.startX = startX2
-        object2.startY = startY2
+        object2.startY = startY
         object3.startX = startX3
-        object3.startY = startY3
+        object3.startY = startY
+        object4.startX = startX4
+        object4.startY = startY
+        object5.startX = startX5
+        object5.startY = startY
 
         // Choose the correct object
-        object1.iscorrect = false
-        object2.iscorrect = true
+        object1.iscorrect = true
+        object2.iscorrect = false
         object3.iscorrect = false
+        object4.iscorrect = false
+        object5.iscorrect = false
 
         //initialise the number correct
         let numcorrect = 0
@@ -174,7 +172,7 @@ export default class level1ff extends Phaser.Scene
                 if(numcorrect == totalnumobjects){
                 // Completion animation 
                     char.play(charanims[3], false)
-                    vehicle.setTexture('vehicle-win');
+                    vehicle.setTexture(this.vehicleWin);
 
                 // Transition scene
                     this.timedEvent = this.time.delayedCall(2000, this.playTransition, [], this)
@@ -198,15 +196,20 @@ export default class level1ff extends Phaser.Scene
         }
 
         playTransition() {
-            this.scene.start('intro-bonus')
+
+            let continueButton = this.add.image(700, 450, 'continue').setInteractive()
+            continueButton.once('pointerdown', () => {
+                this.scene.stop()
+                this.scene.start('intro-bonus')
+            }
+                )
+
+            // this.scene.start('intro-bonus')
         }
 
-    update()
-    {
 
 
 
 
 }
 
-}
