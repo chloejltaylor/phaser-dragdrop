@@ -16,11 +16,6 @@ export default class Bonus extends Phaser.Scene
     super('bonus')
     }
 
-    init()
-    {
-    let numcorrect = 0
-    }
-
     preload()
     {
         this.load.image('bonus-paramedic', './src/assets/temp/bonus_paramedic-1a.png')
@@ -33,7 +28,7 @@ export default class Bonus extends Phaser.Scene
 
 
         // Coordinates of the drop zone
-        let target1posX = 700
+        let target1posX = 1000
         let target1posY = 350
 
         // Space around drop zone that is accepted
@@ -44,19 +39,27 @@ export default class Bonus extends Phaser.Scene
         let startX1 = 300
         let startX2 = 700
         let startX3 = 1100
-        let startY1 = 700
-        let startY2 = 700
-        let startY3 = 700
+        let startY = 850
 
+        //End position of the correct character
+        let charEndX = 1000
+        let charEndY = 350
+
+        //Position images
         this.add.image(700, 450, 'background');
+        this.add.image(700, 900,'dock')
 
         //  Create a 'drop zone'
-        this.add.image(target1posX, target1posY, 'bonus-paramedic')
+        this.add.image(target1posX, target1posY, 'charHitZone')
+
+        //image to show who we are trying to match
+        this.add.image(500, 450, 'bonus-paramedic')
+        
 
         // Place draggables           
-        let object1 = this.add.spine(startX1, startY1, 'po')
-        let object2 = this.add.spine(startX2, startY2, 'ff')
-        let object3 = this.add.spine(startX3, startY3, 'pm')
+        let object1 = this.add.spine(startX1, startY, 'po')
+        let object2 = this.add.spine(startX2, startY, 'ff')
+        let object3 = this.add.spine(startX3, startY, 'pm')
 
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })
@@ -69,24 +72,13 @@ export default class Bonus extends Phaser.Scene
         object3.play(object3anims[0], true)
 
 
-        // object1.objectstate = ['idle_1','active_1','correct_1','incorrect_1']
-        // object2.objectstate = ['idle_2','active_2','correct_2','incorrect_2']
-        // object3.objectstate = ['idle_3','active_3','idle_3','incorrect_3']
-
         // Incorrect draggables to be sent back where they started
-        // Correct draggables to click to their place in the drop zone
-        object1.endX = 850
-        object1.endY = 300
-        object2.endX = startX2
-        object2.endY = startY2
-        object3.endX = startX3
-        object3.endY = startY3
         object1.startX = startX1
-        object1.startY = startY1
+        object1.startY = startY
         object2.startX = startX2
-        object2.startY = startY2
+        object2.startY = startY
         object3.startX = startX3
-        object3.startY = startY3
+        object3.startY = startY
 
         // Choose the correct object
         object1.iscorrect = false
@@ -102,14 +94,14 @@ export default class Bonus extends Phaser.Scene
         let totalnumobjects = 1
 
         // show the active objectstate of the draggable when dragged
-        this.input.on('gameobjectover', (pointer, gameObject) =>
-        {
-            if(gameObject.objectState){
-                gameObject.setTexture(gameObject.objectstate[1]);
-            }
+        // this.input.on('gameobjectover', (pointer, gameObject) =>
+        // {
+        //     if(gameObject.objectState){
+        //         gameObject.setTexture(gameObject.objectstate[1]);
+        //     }
             
 
-        });
+        // });
 
         // Move the draggable with the pointer
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
@@ -131,8 +123,8 @@ export default class Bonus extends Phaser.Scene
                 correctObject.play(object3anims[3], false);
                 // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();
-                gameObject.x = gameObject.endX
-                gameObject.y = gameObject.endY
+                gameObject.x = charEndX
+                gameObject.y = charEndY
                 if(gameObject.iscorrect) {numcorrect++}
 
                 // End the round

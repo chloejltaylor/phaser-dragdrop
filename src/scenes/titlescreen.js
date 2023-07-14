@@ -17,6 +17,7 @@ vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
 vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
 characters = ['pm', 'ff', 'po']
 correctItems = ['item4', 'item3', 'item5']
+sublevel = 0
 
 
 preload()
@@ -68,10 +69,7 @@ preload()
     this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
     this.load.spine("pm","./src/assets/char/pm/char_pm.json","./src/assets/char/pm/char_pm.atlas")
     this.load.image('continue', './src/assets/Buttons/continue.png')
-
-
-
-
+    this.load.image('charHitZone', './src/assets/temp/bonus_paramedic-1b.png')
 }
 
 create()
@@ -113,13 +111,15 @@ create()
     
     start.once('pointerdown', () => {
         this.scene.stop()
+        // this.scene.start('bonus')
 
         this.scene.start('level1',  {
             char: this.characters[this.levels[0]], 
             vehicle: this.vehicles[this.levels[0]],
             vehicleWin: this.vehiclesWin[this.levels[0]],
             correctItem: this.correctItems[this.levels[0]],
-            levels: this.levels
+            levels: this.levels,
+            sublevel: this.sublevel
         })
 
         }

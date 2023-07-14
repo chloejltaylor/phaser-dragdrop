@@ -20,7 +20,8 @@ export default class level3 extends Phaser.Scene
         this.vehicleWin = data.vehicleWin
         this.char = data.char
         this.correctItem = data.correctItem
-        console.log(this.correctItem)
+        this.sublevel = data.sublevel
+        this.levels= data.levels
 
     }
 
@@ -195,17 +196,51 @@ export default class level3 extends Phaser.Scene
             });
         }
 
+
         playTransition() {
 
             let continueButton = this.add.image(700, 450, 'continue').setInteractive()
+
             continueButton.once('pointerdown', () => {
                 this.scene.stop()
-                this.scene.start('intro-bonus')
-            }
-                )
-
-            // this.scene.start('intro-bonus')
+                if(this.sublevel==0){
+                    this.scene.start('level3',  {
+                        char: this.characters[this.levels[1]], 
+                        vehicle: this.vehicles[this.levels[1]],
+                        vehicleWin: this.vehiclesWin[this.levels[1]],
+                        correctItem: this.correctItems[this.levels[1]],
+                        levels: this.levels,
+                        sublevel: this.sublevel+1
+                    }) 
+                }
+                else if(this.sublevel==1){
+                    this.scene.start('level3',  {
+                        char: this.characters[this.levels[2]], 
+                        vehicle: this.vehicles[this.levels[2]],
+                        vehicleWin: this.vehiclesWin[this.levels[2]],
+                        correctItem: this.correctItems[this.levels[2]],
+                        levels: this.levels,
+                        sublevel: this.sublevel+1
+                    }) 
+                }
+                else if(this.sublevel==2){
+                   
+                        this.scene.start('intro-bonus', {sublevel: 0})
+                    
+                }
+            })
         }
+        // playTransition() {
+
+        //     let continueButton = this.add.image(700, 450, 'continue').setInteractive()
+        //     continueButton.once('pointerdown', () => {
+        //         this.scene.stop()
+        //         this.scene.start('intro-bonus')
+        //     }
+        //     )
+
+        //     // this.scene.start('intro-bonus')
+        // }
 
 
 

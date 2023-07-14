@@ -21,7 +21,7 @@ export default class level2 extends Phaser.Scene
         this.char = data.char
         this.correctItem = data.correctItem
         this.levels= data.levels
-
+        this.sublevel= data.sublevel
 
     }
 
@@ -192,13 +192,38 @@ export default class level2 extends Phaser.Scene
 
             continueButton.once('pointerdown', () => {
                 this.scene.stop()
-                this.scene.start('level3',  {
-                    char: this.characters[this.levels[2]], 
-                    vehicle: this.vehicles[this.levels[2]],
-                    vehicleWin: this.vehiclesWin[this.levels[2]],
-                    correctItem: this.correctItems[this.levels[2]],
-                    levels: this.levels
-                })  
+                if(this.sublevel==0){
+                    this.scene.start('level2',  {
+                        
+                        char: this.characters[this.levels[1]], 
+                        vehicle: this.vehicles[this.levels[1]],
+                        vehicleWin: this.vehiclesWin[this.levels[1]],
+                        correctItem: this.correctItems[this.levels[1]],
+                        levels: this.levels,
+                        sublevel: this.sublevel+1
+                    }) 
+                }
+                else if(this.sublevel==1){
+                    console.log("2:2")
+                    this.scene.start('level2',  {
+                        char: this.characters[this.levels[2]], 
+                        vehicle: this.vehicles[this.levels[2]],
+                        vehicleWin: this.vehiclesWin[this.levels[2]],
+                        correctItem: this.correctItems[this.levels[2]],
+                        levels: this.levels,
+                        sublevel: this.sublevel+1
+                    }) 
+                }
+                else if(this.sublevel==2){
+                    this.scene.start('level3',  {
+                        char: this.characters[this.levels[0]], 
+                        vehicle: this.vehicles[this.levels[0]],
+                        vehicleWin: this.vehiclesWin[this.levels[0]],
+                        correctItem: this.correctItems[this.levels[0]],
+                        levels: this.levels,
+                        sublevel: 0
+                    }) 
+                }
             })
         }
 
