@@ -10,17 +10,19 @@ import bonus from './scenes/bonus.js'
 import congratulations from './scenes/congratulations.js'
 
 import UIScene from './scenes/ui.js'
-import levelTracker from './scenes/leveltracker.js'
+import backtomenu from './scenes/backtomenu.js'
 import preloader from './scenes/preloader.js'
+import music from './scenes/music.js'
+import pause from './scenes/pause.js'
 
 export default new Phaser.Game({
 type: Phaser.AUTO,
 width: 1400,
 height: 900,
 scene: [
-    Title, preloader, 
+    Title, preloader, music,  
     level1, level2, level3,
-    congratulations, introBonus, bonus],
+    congratulations, introBonus, bonus, pause, UIScene, backtomenu],
 physics: {
         default: 'arcade',
         arcade: {

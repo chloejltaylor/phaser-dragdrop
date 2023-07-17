@@ -28,6 +28,7 @@ export default class level2 extends Phaser.Scene
     preload()
     {
         this.scene.run('level-tracker')
+        this.scene.run('ui-scene')
     }
 
     create()

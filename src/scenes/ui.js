@@ -9,31 +9,44 @@ export default class UIScene extends Phaser.Scene
 		super('ui-scene')
 	}
 
+    preload()
+    {
+        this.load.image('pause', './src/assets/Buttons/pause.png')
+        this.load.image('back', './src/assets/Buttons/back.png')
+    }
+
 	create()
 
     {
-        this.label = this.add.text(10, 10, 'Count: 0', {
-            fontSize: 32
+        this.backbutton = this.add.image(50, 50, 'back').setScale(0.1)
+        this.backbutton.setInteractive().on('pointerdown', pointer =>
+        {
+            this.scene.run('backtomenu')
+        });
 
-        })
+        this.pausebutton = this.add.image(1300, 10, 'pause')
+        this.pausebutton.setInteractive().on('pointerdown', pointer =>
+        {
+            this.scene.run('pause')
+        });
 
         // listen to 'update-count' event and call `updateCount()`
         // when it fires
-        eventsCenter.on('update-count', this.updateCount, this)
+        // eventsCenter.on('pause', this.updateCount, this)
 
 
 
         // clean up when Scene is shutdown
-        this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-            eventsCenter.off('update-count', this.updateCount, this)
-        })
+        // this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+        //     eventsCenter.off('update-count', this.updateCount, this)
+        // })
 
     }
 
-    updateCount(count)
-    {
-        this.label.text = `Count: ${count}`
-    }
+    // updateCount(count)
+    // {
+    //     this.label.text = `Count: ${count}`
+    // }
 
 
 }

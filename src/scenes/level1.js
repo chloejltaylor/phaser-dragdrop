@@ -28,11 +28,13 @@ export default class level1 extends Phaser.Scene
     preload()
     {
         this.scene.run('level-tracker')
+        this.scene.run('ui-scene')
     }
 
     create()
     {
 
+        
         console.log("level 1")
 
         // Coordinates of the drop zone
