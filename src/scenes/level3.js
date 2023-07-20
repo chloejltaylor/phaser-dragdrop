@@ -49,7 +49,7 @@ export default class level3 extends Phaser.Scene
 
         // Starting positions of the draggables
 
-        let startY = 800
+        let startY = 780
 
         let startingPositionsX = [200, 450, 700, 950, 1200]
         // console.log(startingPositionsX)
@@ -65,27 +65,27 @@ export default class level3 extends Phaser.Scene
         let startX5 = startingPositionsX[4]
 
         this.add.image(700, 450, 'background')
-        const vehicle = this.add.image(600, 350, this.vehicle).setScale(0.8)
+        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.8)
 
                 //set interactive vehicle feature
-                vehicle.setInteractive().on('pointerdown', pointer =>
+                this.vehicleObject.setInteractive().on('pointerdown', pointer =>
                 {
-                    vehicle.setTexture(this.vehicleInteractive)
+                    this.vehicleObject.setTexture(this.vehicleInteractive)
                     this.time.delayedCall(1000,  changeback, [], this)
                 })
                 function changeback(){
-                    vehicle.setTexture(this.vehicle)
+                    this.vehicleObject.setTexture(this.vehicle)
                 }
 
         // Place charatcer
-        const char = this.add.spine(1200, 550, this.char).setScale(2)
-        const charanims = char.getAnimationList()
+        this.charObject = this.add.spine(1200, 550, this.char).setScale(2)
+        const charanims = this.charObject.getAnimationList()
 
         // console.log(charanims)
 
-        char.setInteractive().on('pointerdown', pointer =>
+        this.charObject.setInteractive().on('pointerdown', pointer =>
         {
-            char.play(charanims[2], false);
+            this.charObject.play(charanims[2], false);
         });
 
 
@@ -94,55 +94,55 @@ export default class level3 extends Phaser.Scene
 
 
         // Place draggables           
-        let object1 = this.add.image(startX1, startY, this.correctItem)
-        let object2 = this.add.image(startX2, startY, 'decoy1')
-        let object3 = this.add.image(startX3, startY, 'decoy2')
-        let object4 = this.add.image(startX4, startY, 'decoy3')
-        let object5 = this.add.image(startX5, startY, 'decoy4')
-        object1.setInteractive({ draggable: true })
-        object2.setInteractive({ draggable: true })
-        object3.setInteractive({ draggable: true })
-        object4.setInteractive({ draggable: true })
-        object5.setInteractive({ draggable: true })
+        this.object1 = this.add.image(startX1, startY, this.correctItem)
+        this.object2 = this.add.image(startX2, startY, 'decoy1')
+        this.object3 = this.add.image(startX3, startY, 'decoy2')
+        this.object4 = this.add.image(startX4, startY, 'decoy3')
+        this.object5 = this.add.image(startX5, startY, 'decoy4')
+        this.object1.setInteractive({ draggable: true })
+        this.object2.setInteractive({ draggable: true })
+        this.object3.setInteractive({ draggable: true })
+        this.object4.setInteractive({ draggable: true })
+        this.object5.setInteractive({ draggable: true })
 
         // set different textures for different states: IDLE, ACTIVE, CORRECT, INCORRECT
 
-        object1.objectstate = [this.correctItem, this.correctItem,this.correctItem,this.correctItem]
-        object2.objectstate = ['decoy1','decoy1','decoy1','decoy1']
-        object3.objectstate = ['decoy2','decoy2','decoy2','decoy2']
-        object4.objectstate = ['decoy3','decoy3','decoy3','decoy3']
-        object5.objectstate = ['decoy4','decoy4','decoy4','decoy4']
+        this.object1.objectstate = [this.correctItem, this.correctItem,this.correctItem,this.correctItem]
+        this.object2.objectstate = ['decoy1','decoy1','decoy1','decoy1']
+        this.object3.objectstate = ['decoy2','decoy2','decoy2','decoy2']
+        this.object4.objectstate = ['decoy3','decoy3','decoy3','decoy3']
+        this.object5.objectstate = ['decoy4','decoy4','decoy4','decoy4']
 
         // Incorrect draggables to be sent back where they started
         // Correct draggables to click to their place in the drop zone
-        object1.endX = startX1
-        object1.endY = startY
-        object2.endX = 950
-        object2.endY = startY
-        object3.endX = startX3
-        object3.endY = startY
-        object4.endX = startX4
-        object4.endY = startY
-        object5.endX = startX5
-        object5.endY = startY
+        this.object1.endX = startX1
+        this.object1.endY = startY
+        this.object2.endX = 950
+        this.object2.endY = startY
+        this.object3.endX = startX3
+        this.object3.endY = startY
+        this.object4.endX = startX4
+        this.object4.endY = startY
+        this.object5.endX = startX5
+        this.object5.endY = startY
 
-        object1.startX = startX1
-        object1.startY = startY
-        object2.startX = startX2
-        object2.startY = startY
-        object3.startX = startX3
-        object3.startY = startY
-        object4.startX = startX4
-        object4.startY = startY
-        object5.startX = startX5
-        object5.startY = startY
+        this.object1.startX = startX1
+        this.object1.startY = startY
+        this.object2.startX = startX2
+        this.object2.startY = startY
+        this.object3.startX = startX3
+        this.object3.startY = startY
+        this.object4.startX = startX4
+        this.object4.startY = startY
+        this.object5.startX = startX5
+        this.object5.startY = startY
 
         // Choose the correct object
-        object1.iscorrect = true
-        object2.iscorrect = false
-        object3.iscorrect = false
-        object4.iscorrect = false
-        object5.iscorrect = false
+        this.object1.iscorrect = true
+        this.object2.iscorrect = false
+        this.object3.iscorrect = false
+        this.object4.iscorrect = false
+        this.object5.iscorrect = false
 
         //initialise the number correct
         let numcorrect = 0
@@ -186,8 +186,19 @@ export default class level3 extends Phaser.Scene
                 // End the round
                 if(numcorrect == totalnumobjects){
                 // Completion animation 
-                    char.play(charanims[3], false)
-                    vehicle.setTexture(this.vehicleWin);
+                    this.charObject.play(charanims[3], false)
+                    this.vehicleObject.setTexture(this.vehicleWin)
+
+                    this.tweens.add({
+                        targets: this.vehicleObject,
+                        props: {
+                            x: { value: -1000, duration: 2500 },
+                        },
+                        ease: 'Sine.easeInOut',
+                    })
+
+                //prevent player from interacting
+                this.removeInteractiveElements()
 
                 // Transition scene
                     this.timedEvent = this.time.delayedCall(2000, this.playTransition, [], this)
@@ -208,6 +219,16 @@ export default class level3 extends Phaser.Scene
                 });
             }
             });
+        }
+
+        removeInteractiveElements(){
+            this.vehicleObject.disableInteractive()
+            this.charObject.disableInteractive()
+            this.object1.disableInteractive()
+            this.object2.disableInteractive()
+            this.object3.disableInteractive()
+            this.object4.disableInteractive()
+            this.object5.disableInteractive()
         }
 
 
@@ -246,19 +267,6 @@ export default class level3 extends Phaser.Scene
                 }
             })
         }
-        // playTransition() {
-
-        //     let continueButton = this.add.image(700, 450, 'continue').setInteractive()
-        //     continueButton.once('pointerdown', () => {
-        //         this.scene.stop()
-        //         this.scene.start('intro-bonus')
-        //     }
-        //     )
-
-        //     // this.scene.start('intro-bonus')
-        // }
-
-
 
 
 

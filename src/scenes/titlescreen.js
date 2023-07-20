@@ -141,7 +141,8 @@ create()
             vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
             correctItem: this.correctItems[this.levels[0]],
             levels: this.levels,
-            sublevel: this.sublevel
+            sublevel: this.sublevel,
+            firstLevel: true
         })
 
         }
