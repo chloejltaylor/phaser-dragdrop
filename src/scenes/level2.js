@@ -6,6 +6,8 @@ export default class level2 extends Phaser.Scene
     timedEvent
     vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
+
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
 
@@ -18,6 +20,7 @@ export default class level2 extends Phaser.Scene
     {
         this.vehicle = data.vehicle
         this.vehicleWin = data.vehicleWin
+        this.vehicleInteractive = data.vehicleInteractive
         this.char = data.char
         this.correctItem = data.correctItem
         this.levels= data.levels
@@ -37,8 +40,8 @@ export default class level2 extends Phaser.Scene
         console.log("level 2")
 
         // Coordinates of the drop zone
-        let target1posX = 950
-        let target1posY = 340
+        let target1posX = 800
+        let target1posY = 350
 
         // Space around drop zone that is accepted
         let marginX = 150
@@ -62,10 +65,20 @@ export default class level2 extends Phaser.Scene
         let startX4 = startingPositionsX[3]
 
         this.add.image(700, 450, 'background')
-        const vehicle = this.add.image(700, 350, this.vehicle)
+        const vehicle = this.add.image(600, 350, this.vehicle).setScale(0.8)
+
+{{                //set interactive vehicle feature
+        vehicle.setInteractive().on('pointerdown', pointer =>
+        {
+            vehicle.setTexture(this.vehicleInteractive)
+            this.time.delayedCall(1000,  changeback, [], this)
+        })
+        function changeback(){
+            vehicle.setTexture(this.vehicle)
+        }}}
 
         // Place charatcer
-        const char = this.add.spine(1200, 550, this.char)
+        const char = this.add.spine(1200, 550, this.char).setScale(2)
         const charanims = char.getAnimationList()
 
 
@@ -76,7 +89,7 @@ export default class level2 extends Phaser.Scene
 
 
         //Place dock
-        let dock = this.add.image(700, 900,'dock2')
+        let dock = this.add.image(700, 850,'dock2')
 
 
         // Place draggables           
@@ -199,6 +212,7 @@ export default class level2 extends Phaser.Scene
                         char: this.characters[this.levels[1]], 
                         vehicle: this.vehicles[this.levels[1]],
                         vehicleWin: this.vehiclesWin[this.levels[1]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[1]],
                         correctItem: this.correctItems[this.levels[1]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -210,6 +224,7 @@ export default class level2 extends Phaser.Scene
                         char: this.characters[this.levels[2]], 
                         vehicle: this.vehicles[this.levels[2]],
                         vehicleWin: this.vehiclesWin[this.levels[2]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[2]],
                         correctItem: this.correctItems[this.levels[2]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -220,6 +235,7 @@ export default class level2 extends Phaser.Scene
                         char: this.characters[this.levels[0]], 
                         vehicle: this.vehicles[this.levels[0]],
                         vehicleWin: this.vehiclesWin[this.levels[0]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
                         correctItem: this.correctItems[this.levels[0]],
                         levels: this.levels,
                         sublevel: 0

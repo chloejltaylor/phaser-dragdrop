@@ -19,6 +19,7 @@ export default new Phaser.Game({
 type: Phaser.AUTO,
 width: 1400,
 height: 900,
+backgroundColor: "#552211",
 scene: [
     Title, preloader, music,  
     level1, level2, level3,
@@ -27,14 +28,17 @@ physics: {
         default: 'arcade',
         arcade: {
             gravity: {
-            y: 200
+            y: 0
             },
-            debug: false
+            debug: false,
+            
         }
     },
 scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        // mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
+        mode: Phaser.Scale.CENTER_VERTICALLY
+        // autoCenter: Phaser.Scale.CENTER_BOTH
 },
 
 plugins: {

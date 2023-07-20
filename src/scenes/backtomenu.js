@@ -29,7 +29,7 @@ export default class backtomenu extends Phaser.Scene
         this.backtomenurtext = this.add.text(700, 350, 'RETURN TO MAP SCREEN?', {
             fontSize: 32
         })
-        this.closeButton = this.add.image(500, 450, 'close').setScale(0.1)
+        this.closeButton = this.add.image(500, 450, 'close')
         this.closeButton.setInteractive().on('pointerdown', pointer =>
         {
             this.game.scene.resume(this.currentScene)

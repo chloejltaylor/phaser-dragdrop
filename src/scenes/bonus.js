@@ -6,6 +6,7 @@ export default class Bonus extends Phaser.Scene
     timedEvent
     vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
 
@@ -36,10 +37,10 @@ export default class Bonus extends Phaser.Scene
         let marginY = 300
 
         // Starting positions of the draggables
-        let startX1 = 300
+        let startX1 = 400
         let startX2 = 700
-        let startX3 = 1100
-        let startY = 850
+        let startX3 = 1000
+        let startY = 870
 
         //End position of the correct character
         let charEndX = 1000
@@ -47,13 +48,13 @@ export default class Bonus extends Phaser.Scene
 
         //Position images
         this.add.image(700, 450, 'background');
-        this.add.image(700, 900,'dock')
+        this.add.image(700, 850,'dock')
 
         //  Create a 'drop zone'
         this.add.image(target1posX, target1posY, 'charHitZone')
 
         //image to show who we are trying to match
-        this.add.image(500, 450, 'bonus-paramedic')
+        this.add.image(500, 400, 'bonus-paramedic').setScale(0.8)
         
 
         // Place draggables           
@@ -67,9 +68,7 @@ export default class Bonus extends Phaser.Scene
         const object1anims = object1.getAnimationList()
         const object2anims = object2.getAnimationList()
         const object3anims = object3.getAnimationList()
-        object1.play(object1anims[0], true)
-        object2.play(object2anims[0], true)
-        object3.play(object3anims[0], true)
+
 
 
         // Incorrect draggables to be sent back where they started

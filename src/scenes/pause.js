@@ -29,7 +29,7 @@ export default class pause extends Phaser.Scene
         this.pausetext = this.add.text(700, 350, 'PAUSE SCREEN', {
             fontSize: 32
         })
-        this.closeButton = this.add.image(700, 450, 'close').setScale(0.1)
+        this.closeButton = this.add.image(700, 450, 'close')
         this.closeButton.setInteractive().on('pointerdown', pointer =>
         {
             this.game.scene.resume(this.currentScene)

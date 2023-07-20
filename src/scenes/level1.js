@@ -4,8 +4,10 @@ import eventsCenter from './eventscentre.js'
 export default class level1 extends Phaser.Scene
 {
     timedEvent
+    onboardingTimer
     vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
 
@@ -18,6 +20,7 @@ export default class level1 extends Phaser.Scene
     {
         this.vehicle = data.vehicle
         this.vehicleWin = data.vehicleWin
+        this.vehicleInteractive = data.vehicleInteractive
         this.char = data.char
         this.correctItem = data.correctItem
         this.levels= data.levels
@@ -33,13 +36,14 @@ export default class level1 extends Phaser.Scene
 
     create()
     {
-
         
         console.log("level 1")
 
         // Coordinates of the drop zone
-        let target1posX = 950
-        let target1posY = 340
+        let target1posX = 800
+        let target1posY = 350
+
+
 
         // Space around drop zone that is accepted
         let marginX = 150
@@ -61,21 +65,34 @@ export default class level1 extends Phaser.Scene
         let startX3 = startingPositionsX[2]
 
         this.add.image(700, 450, 'background')
-        const vehicle = this.add.image(700, 350, this.vehicle)
+        const vehicle = this.add.image(600, 350, this.vehicle).setScale(0.8)
+        // this.add.image(target1posX, target1posY, 'target').setScale(0.8)
+
+        //set interactive vehicle feature
+        vehicle.setInteractive().on('pointerdown', pointer =>
+        {
+            vehicle.setTexture(this.vehicleInteractive)
+            this.time.delayedCall(1000,  changeback, [], this)
+        })
+        function changeback(){
+            vehicle.setTexture(this.vehicle)
+        }
+        
 
         // Place charatcer
-        const char = this.add.spine(1200, 550, this.char)
+        const char = this.add.spine(1200, 550, this.char).setScale(2)
         const charanims = char.getAnimationList()
 
 
         char.setInteractive().on('pointerdown', pointer =>
         {
             char.play(charanims[2], false);
+
         });
 
 
         //Place dock
-        let dock = this.add.image(700, 900,'dock')
+        let dock = this.add.image(700, 850,'dock')
 
 
         // Place draggables           
@@ -85,6 +102,17 @@ export default class level1 extends Phaser.Scene
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })
         object3.setInteractive({ draggable: true })
+
+        // Onboarding
+        this.handHelper = this.add.image(400, startY1, 'handHelper')
+        this.hand = this.add.spine(400, startY1, 'hand')
+        this.handanims = this.hand.getAnimationList()
+        this.hand.setAlpha(0)
+        
+
+        this.handHelper.setAlpha(0)
+        this.onboardingTimer = this.time.delayedCall(800, this.onboardingAnim, [], this)
+
 
         // set different textures for different states: IDLE, ACTIVE, CORRECT, INCORRECT
 
@@ -155,7 +183,7 @@ export default class level1 extends Phaser.Scene
                 if(numcorrect == totalnumobjects){
                 // Completion animation 
                     char.play(charanims[3], false)
-                    vehicle.setTexture(this.vehicleWin);
+                    vehicle.setTexture(this.vehicleWin)
 
                 // Transition scene
                     this.timedEvent = this.time.delayedCall(2000, this.playTransition, [], this)
@@ -165,7 +193,7 @@ export default class level1 extends Phaser.Scene
 
                 this.sound.play('incorrect')
                 // Set draggable back to idle objectstate
-                gameObject.setTexture(gameObject.objectstate[0]);
+                gameObject.setTexture(gameObject.objectstate[0])
                 this.tweens.add({
                     targets: gameObject,
                     props: {
@@ -173,9 +201,43 @@ export default class level1 extends Phaser.Scene
                         y: { value: gameObject.startY, duration: 800 },
                     },
                     ease: 'Sine.easeInOut',
-                });
+                })
             }
-            });
+            })
+        }
+
+        onboardingAnim() {
+            this.hand.play(this.handanims[1], false)
+            this.tweens.chain({
+                targets: this.hand,
+                tweens: [
+                    {
+                        x: 400,
+                        alpha: 1,
+                        ease: 'Sine.easeInOut',
+                        duration: 200
+                    },
+                    {
+                        x: 400,
+                        y: 800,
+                        ease: 'Sine.easeInOut',
+                        duration: 500
+                    },
+                    {
+                        x: 900,
+                        y: 400,
+                        ease: 'Sine.easeInOut',
+                        duration: 2000
+                    },
+                    {
+                        alpha: 0,
+                        ease: 'Sine.easeInOut',
+                        duration: 200
+                    },
+
+                ]
+            })
+
         }
 
         playTransition() {
@@ -189,6 +251,7 @@ export default class level1 extends Phaser.Scene
                         char: this.characters[this.levels[1]], 
                         vehicle: this.vehicles[this.levels[1]],
                         vehicleWin: this.vehiclesWin[this.levels[1]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[1]],
                         correctItem: this.correctItems[this.levels[1]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -199,6 +262,7 @@ export default class level1 extends Phaser.Scene
                         char: this.characters[this.levels[2]], 
                         vehicle: this.vehicles[this.levels[2]],
                         vehicleWin: this.vehiclesWin[this.levels[2]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[2]],
                         correctItem: this.correctItems[this.levels[2]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -209,6 +273,7 @@ export default class level1 extends Phaser.Scene
                         char: this.characters[this.levels[0]], 
                         vehicle: this.vehicles[this.levels[0]],
                         vehicleWin: this.vehiclesWin[this.levels[0]],
+                        vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
                         correctItem: this.correctItems[this.levels[0]],
                         levels: this.levels,
                         sublevel: 0

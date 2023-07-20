@@ -9,6 +9,8 @@ super('congratulations')
 
 vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
 vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
+
 characters = ['pm', 'ff', 'po']
 correctItems = ['item4', 'item3', 'item5']
 
@@ -45,7 +47,7 @@ create()
 
     this.input.keyboard.once('keydown-SPACE', () => {this.scene.start('level1ff')})
 
-    const playagain = this.add.image(width * 0.5, height * 0.7, 'playagain').setScale(0.2).setInteractive()
+    const playagain = this.add.image(width * 0.5, height * 0.7, 'playagain').setInteractive()
 
     playagain.once('pointerdown', () => {
 
@@ -56,6 +58,7 @@ create()
             char: this.characters[this.levels[0]], 
             vehicle: this.vehicles[this.levels[0]],
             vehicleWin: this.vehiclesWin[this.levels[0]],
+            vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
             correctItem: this.correctItems[this.levels[0]],
             levels: this.levels
         })

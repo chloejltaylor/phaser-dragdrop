@@ -18,13 +18,13 @@ export default class UIScene extends Phaser.Scene
 	create()
 
     {
-        this.backbutton = this.add.image(50, 50, 'back').setScale(0.1)
+        this.backbutton = this.add.image(50, 50, 'back')
         this.backbutton.setInteractive().on('pointerdown', pointer =>
         {
             this.scene.run('backtomenu')
         });
 
-        this.pausebutton = this.add.image(1300, 10, 'pause')
+        this.pausebutton = this.add.image(1350, 50, 'pause')
         this.pausebutton.setInteractive().on('pointerdown', pointer =>
         {
             this.scene.run('pause')

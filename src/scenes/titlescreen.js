@@ -12,6 +12,7 @@ super('title')
 
 vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
 vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
 characters = ['pm', 'ff', 'po']
 correctItems = ['item4', 'item3', 'item5']
 sublevel = 0
@@ -21,6 +22,10 @@ preload()
 {
     this.load.image('play', './src/assets/Buttons/play_big_idle.png')
     this.load.image('background', './src/assets/Game/grid-bg.png')
+    // this.load.image('background', './src/assets/background/2100x2000orange.png')
+    this.load.image('handHelper', './src/assets/onboarding/onboarding_hand.png')
+    this.load.spine("hand","./src/assets/Anim/hand/onboarding_hand.json","./src/assets/Anim/hand/onboarding_hand.atlas")
+
     this.scene.run('level-tracker')
     this.scene.run('ui-scene')
     this.scene.run('music')
@@ -39,14 +44,18 @@ preload()
     this.load.image('target', './src/assets/temp/hitzone.png')
     this.load.image('vehicle-pm', './src/assets/temp/vehicle-1a.png')
     this.load.image('vehicle-pm-win', './src/assets/temp/vehicle-1b.png')
+    this.load.image('vehicle-pm-interactive', './src/assets/temp/vehicle-1c.png')
     this.load.image('vehicle-ff', './src/assets/temp/vehicle-2a.png')
     this.load.image('vehicle-ff-win', './src/assets/temp/vehicle-2b.png')
+    this.load.image('vehicle-ff-interactive', './src/assets/temp/vehicle-2c.png')
     this.load.image('vehicle', './src/assets/temp/vehicle-1a.png')
     this.load.image('vehicle-win', './src/assets/temp/vehicle-1b.png')
     this.load.image('vehicle-fire', './src/assets/temp/vehicle-2a.png')
     this.load.image('vehicle-fire-win', './src/assets/temp/vehicle-2b.png')
+    this.load.image('vehicle-fire-interactive', './src/assets/temp/vehicle-2c.png')
     this.load.image('vehicle-po', './src/assets/temp/vehicle-3a.png')
     this.load.image('vehicle-po-win', './src/assets/temp/vehicle-3b.png')
+    this.load.image('vehicle-po-interactive', './src/assets/temp/vehicle-3c.png')
     this.load.image('dock', './src/assets/temp/dnd_dock_1.png')
     this.load.image('dock2', './src/assets/temp/dnd_dock_2.png')
     this.load.image('dock3', './src/assets/temp/dnd_dock_3.png')
@@ -70,6 +79,7 @@ preload()
     this.load.image('continue', './src/assets/Buttons/continue.png')
     this.load.image('close', './src/assets/Buttons/close.png')
     this.load.image('charHitZone', './src/assets/temp/bonus_paramedic-1b.png')
+    
 }
 
 create()
@@ -91,6 +101,15 @@ create()
 
     this.input.keyboard.on('keydown-SPACE', () => {
 		eventsCenter.emit('display-next-level', this)
+        gameObject.setInteractive().on('pointerdown', function() {
+    if (scene.scale.isFullscreen) {
+        scene.scale.stopFullscreen();
+        // On stop fulll screen
+    } else {
+        scene.scale.startFullscreen();
+        // On start fulll screen
+    }
+});
 	})
 
 	this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
@@ -104,10 +123,12 @@ create()
 
     this.add.image(700, 450, 'background');
 
-    this.add.text(width * 0.5, height * 0.3, 'Drag and Drop', {
+    this.add.text(width * 0.5, height * 0.3, 'HELPING THE EMERGENCY SERVICES', {
     fontSize: 48}).setOrigin(0.5)
 
     this.start = this.add.image(width * 0.5, height * 0.7, 'play').setScale(1.5).setInteractive()
+
+    
     
     this.start.once('pointerdown', () => {
         this.scene.stop()
@@ -117,6 +138,7 @@ create()
             char: this.characters[this.levels[0]], 
             vehicle: this.vehicles[this.levels[0]],
             vehicleWin: this.vehiclesWin[this.levels[0]],
+            vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
             correctItem: this.correctItems[this.levels[0]],
             levels: this.levels,
             sublevel: this.sublevel
