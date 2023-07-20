@@ -66,7 +66,7 @@ export default class level1 extends Phaser.Scene
         let startX3 = startingPositionsX[2]
 
         this.add.image(700, 450, 'background')
-        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.8)
+        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.7)
 
         // this.add.image(target1posX, target1posY, 'target').setScale(0.8)
 
@@ -82,7 +82,7 @@ export default class level1 extends Phaser.Scene
         
 
         // Place charatcer
-        this.charObject = this.add.spine(1200, 550, this.char).setScale(2)
+        this.charObject = this.add.spine(1100, 600, this.char).setScale(2)
         const charanims = this.charObject.getAnimationList()
 
 

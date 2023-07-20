@@ -65,7 +65,7 @@ export default class level3 extends Phaser.Scene
         let startX5 = startingPositionsX[4]
 
         this.add.image(700, 450, 'background')
-        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.8)
+        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.7)
 
                 //set interactive vehicle feature
                 this.vehicleObject.setInteractive().on('pointerdown', pointer =>
@@ -78,7 +78,7 @@ export default class level3 extends Phaser.Scene
                 }
 
         // Place charatcer
-        this.charObject = this.add.spine(1200, 550, this.char).setScale(2)
+        this.charObject = this.add.spine(1100, 600, this.char).setScale(2)
         const charanims = this.charObject.getAnimationList()
 
         // console.log(charanims)
