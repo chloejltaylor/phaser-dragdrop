@@ -107,6 +107,10 @@ export default class level1 extends Phaser.Scene
 
         // Onboarding
         if(this.firstLevel){
+            this.object1.disableInteractive()
+            this.object2.disableInteractive()
+            this.object3.disableInteractive()
+            this.time.delayedCall(2000, this.makeInteractive, [], this)
             this.handHelper = this.add.image(400, startY1, 'handHelper')
             this.hand = this.add.spine(400, startY1, 'hand')
             this.handanims = this.hand.getAnimationList()
@@ -260,6 +264,12 @@ export default class level1 extends Phaser.Scene
             this.object1.disableInteractive()
             this.object2.disableInteractive()
             this.object3.disableInteractive()
+        }
+
+        makeInteractive(){
+            this.object1.setInteractive()
+            this.object2.setInteractive()
+            this.object3.setInteractive() 
         }
 
         playTransition() {
