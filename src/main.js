@@ -19,7 +19,7 @@ export default new Phaser.Game({
 type: Phaser.AUTO,
 width: 1400,
 height: 900,
-backgroundColor: "#552211",
+backgroundColor: "#eeee00",
 scene: [
     Title, preloader, music,  
     level1, level2, level3,
