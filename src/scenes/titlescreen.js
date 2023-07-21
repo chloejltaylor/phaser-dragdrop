@@ -136,19 +136,19 @@ create()
     
     this.start.once('pointerdown', () => {
         this.scene.stop()
-        this.scene.start('bonus')
+        // this.scene.start('bonus')
 
-        // this.scene.start('level1',  {
-        //     char: this.characters[this.levels[0]], 
-        //     vehicle: this.vehicles[this.levels[0]],
-        //     vehicleWin: this.vehiclesWin[this.levels[0]],
-        //     vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
-        //     siren: this.sirens[this.levels[0]],
-        //     correctItem: this.correctItems[this.levels[0]],
-        //     levels: this.levels,
-        //     sublevel: this.sublevel,
-        //     firstLevel: true
-        // })
+        this.scene.start('level1',  {
+            char: this.characters[this.levels[0]], 
+            vehicle: this.vehicles[this.levels[0]],
+            vehicleWin: this.vehiclesWin[this.levels[0]],
+            vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
+            siren: this.sirens[this.levels[0]],
+            correctItem: this.correctItems[this.levels[0]],
+            levels: this.levels,
+            sublevel: this.sublevel,
+            firstLevel: true
+        })
 
         }
         )
