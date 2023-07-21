@@ -7,7 +7,7 @@ export default class level3 extends Phaser.Scene
     vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
     vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
-
+    sirens = ['siren-pm', 'siren-ff', 'siren-po']
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
 
@@ -25,7 +25,7 @@ export default class level3 extends Phaser.Scene
         this.correctItem = data.correctItem
         this.sublevel = data.sublevel
         this.levels= data.levels
-
+        this.siren = data.siren
     }
 
     preload()
@@ -71,6 +71,7 @@ export default class level3 extends Phaser.Scene
                 this.vehicleObject.setInteractive().on('pointerdown', pointer =>
                 {
                     this.vehicleObject.setTexture(this.vehicleInteractive)
+                    this.sound.play(this.siren)
                     this.time.delayedCall(1000,  changeback, [], this)
                 })
                 function changeback(){
@@ -244,6 +245,7 @@ export default class level3 extends Phaser.Scene
                         vehicle: this.vehicles[this.levels[1]],
                         vehicleWin: this.vehiclesWin[this.levels[1]],
                         vehicleInteractive: this.vehiclesInteractive[this.levels[1]],
+                        siren: this.sirens[this.levels[1]],
                         correctItem: this.correctItems[this.levels[1]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -255,6 +257,7 @@ export default class level3 extends Phaser.Scene
                         vehicle: this.vehicles[this.levels[2]],
                         vehicleWin: this.vehiclesWin[this.levels[2]],
                         vehicleInteractive: this.vehiclesInteractive[this.levels[2]],
+                        siren: this.sirens[this.levels[2]],
                         correctItem: this.correctItems[this.levels[2]],
                         levels: this.levels,
                         sublevel: this.sublevel+1

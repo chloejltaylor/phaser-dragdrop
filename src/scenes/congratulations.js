@@ -10,7 +10,7 @@ super('congratulations')
 vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
 vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
 vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
-
+sirens = ['siren-pm', 'siren-ff', 'siren-po']
 characters = ['pm', 'ff', 'po']
 correctItems = ['item4', 'item3', 'item5']
 
@@ -59,6 +59,7 @@ create()
             vehicle: this.vehicles[this.levels[0]],
             vehicleWin: this.vehiclesWin[this.levels[0]],
             vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
+            siren: this.sirens[this.levels[0]],
             correctItem: this.correctItems[this.levels[0]],
             levels: this.levels
         })

@@ -10,6 +10,7 @@ export default class level1 extends Phaser.Scene
     vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
+    sirens = ['siren-pm', 'siren-ff', 'siren-po']
 
     constructor() 
     {
@@ -26,6 +27,7 @@ export default class level1 extends Phaser.Scene
         this.levels= data.levels
         this.sublevel= data.sublevel
         this.firstLevel = data.firstLevel
+        this.siren = data.siren
 
     }
 
@@ -74,6 +76,8 @@ export default class level1 extends Phaser.Scene
         this.vehicleObject.setInteractive().on('pointerdown', pointer =>
         {
             this.vehicleObject.setTexture(this.vehicleInteractive)
+            console.log(this.siren)
+            this.sound.play(this.siren)
             this.time.delayedCall(1000,  changeback, [], this)
         })
         function changeback(){
@@ -285,6 +289,7 @@ export default class level1 extends Phaser.Scene
                         vehicle: this.vehicles[this.levels[1]],
                         vehicleWin: this.vehiclesWin[this.levels[1]],
                         vehicleInteractive: this.vehiclesInteractive[this.levels[1]],
+                        siren: this.sirens[this.levels[1]],
                         correctItem: this.correctItems[this.levels[1]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -296,6 +301,7 @@ export default class level1 extends Phaser.Scene
                         vehicle: this.vehicles[this.levels[2]],
                         vehicleWin: this.vehiclesWin[this.levels[2]],
                         vehicleInteractive: this.vehiclesInteractive[this.levels[2]],
+                        siren: this.sirens[this.levels[2]],
                         correctItem: this.correctItems[this.levels[2]],
                         levels: this.levels,
                         sublevel: this.sublevel+1
@@ -307,6 +313,7 @@ export default class level1 extends Phaser.Scene
                         vehicle: this.vehicles[this.levels[0]],
                         vehicleWin: this.vehiclesWin[this.levels[0]],
                         vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
+                        siren: this.sirens[this.levels[0]],
                         correctItem: this.correctItems[this.levels[0]],
                         levels: this.levels,
                         sublevel: 0

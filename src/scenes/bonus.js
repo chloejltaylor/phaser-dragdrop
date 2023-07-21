@@ -7,6 +7,7 @@ export default class Bonus extends Phaser.Scene
     vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
     vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
+    sirens = ['siren-pm', 'siren-ff', 'siren-po']
     characters = ['pm', 'ff', 'po']
     correctItems = ['item4', 'item3', 'item5']
 
@@ -44,7 +45,7 @@ export default class Bonus extends Phaser.Scene
 
         //End position of the correct character
         let charEndX = 1000
-        let charEndY = 450
+        let charEndY = 580
 
         //Position images
         this.add.image(700, 450, 'background');

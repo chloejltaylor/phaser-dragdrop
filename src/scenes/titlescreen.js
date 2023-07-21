@@ -16,6 +16,7 @@ vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehi
 characters = ['pm', 'ff', 'po']
 correctItems = ['item4', 'item3', 'item5']
 sublevel = 0
+sirens = ['siren-pm', 'siren-ff', 'siren-po']
 
 
 preload()
@@ -73,7 +74,9 @@ preload()
     this.load.image('platform', './src/assets/Environment/ground.png')
     this.load.audio('correct', './src/assets/Sounds/correct.mp3')
     this.load.audio('incorrect', './src/assets/Sounds/cartoonboing.mp3')
-    
+    this.load.audio('siren-po', './src/assets/Sounds/police_placeholder.mp3')
+    this.load.audio('siren-ff', './src/assets/Sounds/fireengine_placeholder.mp3')
+    this.load.audio('siren-pm', './src/assets/Sounds/ambulance_placeholder.mp3')
     this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
     this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
     this.load.spine("pm","./src/assets/char/pm/char_pm.json","./src/assets/char/pm/char_pm.atlas")
@@ -133,18 +136,19 @@ create()
     
     this.start.once('pointerdown', () => {
         this.scene.stop()
-        // this.scene.start('bonus')
+        this.scene.start('bonus')
 
-        this.scene.start('level1',  {
-            char: this.characters[this.levels[0]], 
-            vehicle: this.vehicles[this.levels[0]],
-            vehicleWin: this.vehiclesWin[this.levels[0]],
-            vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
-            correctItem: this.correctItems[this.levels[0]],
-            levels: this.levels,
-            sublevel: this.sublevel,
-            firstLevel: true
-        })
+        // this.scene.start('level1',  {
+        //     char: this.characters[this.levels[0]], 
+        //     vehicle: this.vehicles[this.levels[0]],
+        //     vehicleWin: this.vehiclesWin[this.levels[0]],
+        //     vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
+        //     siren: this.sirens[this.levels[0]],
+        //     correctItem: this.correctItems[this.levels[0]],
+        //     levels: this.levels,
+        //     sublevel: this.sublevel,
+        //     firstLevel: true
+        // })
 
         }
         )
