@@ -22,7 +22,7 @@ preload()
 {
     this.load.image('play', './src/assets/Buttons/play_big_idle.png')
     // this.load.image('background', './src/assets/Game/grid-bg.png')
-    this.load.image('background', './src/assets/background/background.png')
+    this.load.image('background', './src/assets/Environment/background.png')
     this.load.image('handHelper', './src/assets/onboarding/onboarding_hand.png')
     this.load.spine("hand","./src/assets/Anim/hand/onboarding_hand.json","./src/assets/Anim/hand/onboarding_hand.atlas")
 
