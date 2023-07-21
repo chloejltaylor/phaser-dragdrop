@@ -44,7 +44,7 @@ export default class Bonus extends Phaser.Scene
 
         //End position of the correct character
         let charEndX = 1000
-        let charEndY = 350
+        let charEndY = 450
 
         //Position images
         this.add.image(700, 450, 'background');
@@ -119,6 +119,7 @@ export default class Bonus extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
+                correctObject.setScale(2)
                 correctObject.play(object3anims[3], false);
                 // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();

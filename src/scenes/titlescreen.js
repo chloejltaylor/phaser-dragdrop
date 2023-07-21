@@ -20,6 +20,7 @@ sublevel = 0
 
 preload()
 {
+    
     this.load.image('play', './src/assets/Buttons/play_big_idle.png')
     // this.load.image('background', './src/assets/Game/grid-bg.png')
     this.load.image('background', './src/assets/Environment/background.png')
@@ -70,8 +71,8 @@ preload()
     this.load.image('decoy4', './src/assets/temp/decoy4.png')
     this.load.image('background', './src/assets/Game/grid-bg.png')
     this.load.image('platform', './src/assets/Environment/ground.png')
-    this.load.audio('correct', './src/assets/Sounds/cartoonboing.mp3')
-    this.load.audio('incorrect', './src/assets/Sounds/cartoonbubblepop.mp3')
+    this.load.audio('correct', './src/assets/Sounds/correct.mp3')
+    this.load.audio('incorrect', './src/assets/Sounds/cartoonboing.mp3')
     
     this.load.spine("po","./src/assets/char/po/char_po.json","./src/assets/char/po/char_po.atlas")
     this.load.spine("ff","./src/assets/char/ff/char_ff.json","./src/assets/char/ff/char_ff.atlas")
