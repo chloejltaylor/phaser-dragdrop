@@ -20,6 +20,7 @@ export default class Bonus extends Phaser.Scene
 
     preload()
     {
+        this.scene.run('ui-scene')
         this.load.image('bonus-paramedic', './src/assets/temp/bonus_paramedic-1a.png')
 
 

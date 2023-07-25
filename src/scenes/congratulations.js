@@ -7,17 +7,10 @@ constructor()
 super('congratulations')
 }
 
-vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
-vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
-vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
-sirens = ['siren-pm', 'siren-ff', 'siren-po']
-characters = ['pm', 'ff', 'po']
-correctItems = ['item4', 'item3', 'item5']
-
-
 
 preload()
 {
+    this.scene.run('ui-scene')
     this.load.image('playagain', './src/assets/Buttons/playagain.png')
     this.load.image('background', './src/assets/Game/grid-bg.png')
 }
@@ -55,13 +48,8 @@ create()
         this.scene.stop()
 
         this.scene.start('level1',  {
-            char: this.characters[this.levels[0]], 
-            vehicle: this.vehicles[this.levels[0]],
-            vehicleWin: this.vehiclesWin[this.levels[0]],
-            vehicleInteractive: this.vehiclesInteractive[this.levels[0]],
-            siren: this.sirens[this.levels[0]],
-            correctItem: this.correctItems[this.levels[0]],
-            levels: this.levels
+            levels: this.levels,
+            currentSublevel: 0
         })
     
     

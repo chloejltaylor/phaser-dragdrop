@@ -21,9 +21,10 @@ width: 1400,
 height: 900,
 backgroundColor: "#ee1100",
 scene: [
-    Title, preloader, music,  
+    Title, 
     level1, level2, level3,
-    congratulations, introBonus, bonus, pause, UIScene, backtomenu],
+    congratulations, introBonus, bonus,
+    UIScene, pause, backtomenu],
 physics: {
         default: 'arcade',
         arcade: {

@@ -18,24 +18,24 @@ export default class level3 extends Phaser.Scene
 
     init (data)
     {
-        this.vehicle = data.vehicle
-        this.vehicleWin = data.vehicleWin
-        this.vehicleInteractive = data.vehicleInteractive
-        this.char = data.char
-        this.correctItem = data.correctItem
-        this.sublevel = data.sublevel
         this.levels= data.levels
-        this.siren = data.siren
+        this.currentSublevel = data.currentSublevel
     }
 
     preload()
     {
-        this.scene.run('level-tracker')
         this.scene.run('ui-scene')
     }
 
     create()
     {
+
+        this.vehicle = this.vehicles[this.levels[this.currentSublevel]]
+        this.vehicleWin = this.vehiclesWin[this.levels[this.currentSublevel]]
+        this.vehicleInteractive = this.vehiclesInteractive[this.levels[this.currentSublevel]]
+        this.char = this.characters[this.levels[this.currentSublevel]]
+        this.correctItem = this.correctItems[this.levels[this.currentSublevel]]
+        this.siren = this.sirens[this.levels[this.currentSublevel]]
 
         console.log("level 3")
 
@@ -239,31 +239,19 @@ export default class level3 extends Phaser.Scene
 
             continueButton.once('pointerdown', () => {
                 this.scene.stop()
-                if(this.sublevel==0){
+                if(this.currentSublevel==0){
                     this.scene.start('level3',  {
-                        char: this.characters[this.levels[1]], 
-                        vehicle: this.vehicles[this.levels[1]],
-                        vehicleWin: this.vehiclesWin[this.levels[1]],
-                        vehicleInteractive: this.vehiclesInteractive[this.levels[1]],
-                        siren: this.sirens[this.levels[1]],
-                        correctItem: this.correctItems[this.levels[1]],
                         levels: this.levels,
-                        sublevel: this.sublevel+1
+                        currentSublevel: this.currentSublevel+1
                     }) 
                 }
-                else if(this.sublevel==1){
+                else if(this.currentSublevel==1){
                     this.scene.start('level3',  {
-                        char: this.characters[this.levels[2]], 
-                        vehicle: this.vehicles[this.levels[2]],
-                        vehicleWin: this.vehiclesWin[this.levels[2]],
-                        vehicleInteractive: this.vehiclesInteractive[this.levels[2]],
-                        siren: this.sirens[this.levels[2]],
-                        correctItem: this.correctItems[this.levels[2]],
                         levels: this.levels,
-                        sublevel: this.sublevel+1
+                        currentSublevel: this.currentSublevel+1
                     }) 
                 }
-                else if(this.sublevel==2){
+                else if(this.currentSublevel==2){
                    
                         this.scene.start('intro-bonus', {sublevel: 0})
                     
