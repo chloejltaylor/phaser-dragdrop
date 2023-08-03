@@ -90,7 +90,7 @@ export default class Game extends Phaser.Scene
         char.setInteractive().on('pointerdown', pointer =>
         {
             char.play(charanims[2], false);
-        });
+        })
 
 
         //Place dock

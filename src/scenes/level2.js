@@ -225,28 +225,28 @@ export default class level2 extends Phaser.Scene
         playTransition() {
 
             let continueButton = this.add.image(700, 450, 'continue').setInteractive()
-
+            if(this.currentSublevel==0){
+                this.scene.start('level2',  {
+                    levels: this.levels,
+                    currentSublevel: this.currentSublevel+1
+                }) 
+            }
+            else if(this.currentSublevel==1){
+                this.scene.start('level2',  {
+                    levels: this.levels,
+                    currentSublevel: this.currentSublevel+1
+                }) 
+            }
+            else if(this.currentSublevel==2){
             continueButton.once('pointerdown', () => {
-                this.scene.stop()
-                if(this.currentSublevel==0){
-                    this.scene.start('level2',  {
-                        levels: this.levels,
-                        currentSublevel: this.currentSublevel+1
-                    }) 
-                }
-                else if(this.currentSublevel==1){
-                    this.scene.start('level2',  {
-                        levels: this.levels,
-                        currentSublevel: this.currentSublevel+1
-                    }) 
-                }
-                else if(this.currentSublevel==2){
+
+
                     this.scene.start('level3',  {
                         levels: this.levels,
                         currentSublevel: 0
                     }) 
-                }
-            })
+                })
+            }
         }
 
 }

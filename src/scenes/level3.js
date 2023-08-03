@@ -237,8 +237,7 @@ export default class level3 extends Phaser.Scene
 
             let continueButton = this.add.image(700, 450, 'continue').setInteractive()
 
-            continueButton.once('pointerdown', () => {
-                this.scene.stop()
+            
                 if(this.currentSublevel==0){
                     this.scene.start('level3',  {
                         levels: this.levels,
@@ -252,11 +251,12 @@ export default class level3 extends Phaser.Scene
                     }) 
                 }
                 else if(this.currentSublevel==2){
+                    continueButton.once('pointerdown', () => {
                    
                         this.scene.start('intro-bonus', {sublevel: 0})
                     
-                }
-            })
+                })
+            }
         }
 
 
