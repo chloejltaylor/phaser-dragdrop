@@ -9,8 +9,12 @@ export default class level1 extends Phaser.Scene
     vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
     vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
     characters = ['pm', 'ff', 'po']
-    correctItems = ['item4', 'item3', 'item5']
+    correctItems = ['item1-correct-pm', 'item1-correct-ff', 'item1-correct-po']
+    incorrectItem1s = [['item2-correct-po', 'item2-correct-ff'],['item2-correct-po', 'item2-correct-pm'], ['item2-correct-pm', 'item2-correct-ff']]
+    incorrectItem2s = [['item3-correct-po', 'item3-correct-ff'],['item3-correct-po', 'item3-correct-pm'], ['item3-correct-pm', 'item3-correct-ff']]
     sirens = ['siren-pm', 'siren-ff', 'siren-po']
+    docks = ['dock1-pm', 'dock1-ff', 'dock1-po']
+    
 
     constructor() 
     {
@@ -39,6 +43,8 @@ export default class level1 extends Phaser.Scene
         this.vehicleInteractive = this.vehiclesInteractive[this.levels[this.currentSublevel]]
         this.char = this.characters[this.levels[this.currentSublevel]]
         this.correctItem = this.correctItems[this.levels[this.currentSublevel]]
+        this.incorrectItem1 = this.incorrectItem1s[this.levels[this.currentSublevel]][Phaser.Math.Between(0, 1)]
+        this.incorrectItem2 = this.incorrectItem2s[this.levels[this.currentSublevel]][Phaser.Math.Between(0, 1)]
         this.siren = this.sirens[this.levels[this.currentSublevel]]
         
         console.log("level 1")
@@ -55,11 +61,11 @@ export default class level1 extends Phaser.Scene
 
         // Starting positions of the draggables
 
-        let startY1 = 780
-        let startY2 = 780
-        let startY3 = 780
+        let startY1 = 745
+        let startY2 = 745
+        let startY3 = 745
 
-        let startingPositionsX = [400, 700, 1000]
+        let startingPositionsX = [500, 700, 900]
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
           }
@@ -69,7 +75,7 @@ export default class level1 extends Phaser.Scene
         let startX3 = startingPositionsX[2]
 
         this.add.image(700, 450, 'background')
-        this.vehicleObject = this.add.image(600, 350, this.vehicle).setScale(0.7)
+        this.vehicleObject = this.add.image(600, 440, this.vehicle)
 
         // this.add.image(target1posX, target1posY, 'target').setScale(0.8)
 
@@ -99,13 +105,13 @@ export default class level1 extends Phaser.Scene
 
 
         //Place dock
-        let dock = this.add.image(700, 850,'dock')
+        let dock = this.add.image(700, 750, this.docks[this.currentSublevel])
 
 
         // Place draggables           
         this.object1 = this.add.image(startX1, startY1, this.correctItem)
-        this.object2 = this.add.image(startX2, startY2, 'decoy2')
-        this.object3 = this.add.image(startX3, startY3, 'decoy3')
+        this.object2 = this.add.image(startX2, startY2, this.incorrectItem1)
+        this.object3 = this.add.image(startX3, startY3, this.incorrectItem2)
         this.object1.setInteractive({ draggable: true })
         this.object2.setInteractive({ draggable: true })
         this.object3.setInteractive({ draggable: true })
@@ -116,8 +122,8 @@ export default class level1 extends Phaser.Scene
             this.object2.disableInteractive()
             this.object3.disableInteractive()
             this.time.delayedCall(2000, this.makeInteractive, [], this)
-            this.handHelper = this.add.image(400, startY1, 'handHelper')
-            this.hand = this.add.spine(400, startY1, 'hand')
+            this.handHelper = this.add.image(500, startY1, 'handHelper')
+            this.hand = this.add.spine(500, startY1, 'hand')
             this.handanims = this.hand.getAnimationList()
             this.hand.setAlpha(0)
             this.handHelper.setAlpha(0)
@@ -129,8 +135,8 @@ export default class level1 extends Phaser.Scene
         // set different textures for different states: IDLE, ACTIVE, CORRECT, INCORRECT
 
         this.object1.objectstate = [this.correctItem, this.correctItem,this.correctItem,this.correctItem]
-        this.object2.objectstate = ['decoy1','decoy1','decoy1','decoy1']
-        this.object3.objectstate = ['decoy2','decoy2','decoy2','decoy2']
+        this.object2.objectstate = [this.incorrectItem1, this.incorrectItem1, this.incorrectItem1, this.incorrectItem1]
+        this.object3.objectstate = [this.incorrectItem2, this.incorrectItem2, this.incorrectItem2, this.incorrectItem2]
 
         // Incorrect draggables to be sent back where they started
         // Correct draggables to click to their place in the drop zone
@@ -235,13 +241,13 @@ export default class level1 extends Phaser.Scene
                 targets: this.hand,
                 tweens: [
                     {
-                        x: 400,
+                        x: 500,
                         alpha: 1,
                         ease: 'Sine.easeInOut',
                         duration: 200
                     },
                     {
-                        x: 400,
+                        x: 500,
                         y: 800,
                         ease: 'Sine.easeInOut',
                         duration: 500

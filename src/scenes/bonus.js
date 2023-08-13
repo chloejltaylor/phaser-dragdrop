@@ -4,13 +4,12 @@ import Phaser from '../lib/phaser.js'
 export default class Bonus extends Phaser.Scene
 {
     timedEvent
-    vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
-    vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
-    vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
-    sirens = ['siren-pm', 'siren-ff', 'siren-po']
+    scenarios = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
+    // vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
+    // vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
+    // sirens = ['siren-pm', 'siren-ff', 'siren-po']
     characters = ['pm', 'ff', 'po']
-    correctItems = ['item4', 'item3', 'item5']
-
+    indexNos = [0,1,2]
 
 
     constructor() 
@@ -20,15 +19,26 @@ export default class Bonus extends Phaser.Scene
 
     preload()
     {
-        this.scene.run('ui-scene')
-        this.load.image('bonus-paramedic', './src/assets/temp/bonus_paramedic-1a.png')
-
+        this.scene.run('ui-scene')        
 
     }
 
     create()
     {
 
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              const temp = array[i];
+              array[i] = array[j];
+              array[j] = temp;
+            }
+          }
+          
+
+        shuffle(this.indexNos)
+        console.log(this.indexNos)
 
         // Coordinates of the drop zone
         let target1posX = 1000
@@ -39,10 +49,11 @@ export default class Bonus extends Phaser.Scene
         let marginY = 300
 
         // Starting positions of the draggables
-        let startX1 = 400
+        let startX1 = 500
         let startX2 = 700
-        let startX3 = 1000
-        let startY = 870
+        let startX3 = 900
+        let startingPositionsX = [startX1, startX2, startX3]
+        let startY = 825
 
         //End position of the correct character
         let charEndX = 1000
@@ -50,19 +61,19 @@ export default class Bonus extends Phaser.Scene
 
         //Position images
         this.add.image(700, 450, 'background');
-        this.add.image(700, 850,'dock')
+        this.add.image(700, 750,'dock-bonus')
 
         //  Create a 'drop zone'
         this.add.image(target1posX, target1posY, 'charHitZone')
 
         //image to show who we are trying to match
-        this.add.image(500, 400, 'bonus-paramedic').setScale(0.8)
+        this.add.image(500, 400, this.scenarios[this.indexNos[0]])
         
 
         // Place draggables           
-        let object1 = this.add.spine(startX1, startY, 'po')
-        let object2 = this.add.spine(startX2, startY, 'ff')
-        let object3 = this.add.spine(startX3, startY, 'pm')
+        let object1 = this.add.spine(startingPositionsX[this.indexNos[0]], startY, this.characters[0])
+        let object2 = this.add.spine(startingPositionsX[this.indexNos[1]], startY, this.characters[1])
+        let object3 = this.add.spine(startingPositionsX[this.indexNos[2]], startY, this.characters[2])
 
         object1.setInteractive({ draggable: true })
         object2.setInteractive({ draggable: true })
@@ -74,19 +85,28 @@ export default class Bonus extends Phaser.Scene
 
 
         // Incorrect draggables to be sent back where they started
-        object1.startX = startX1
+        object1.startX = startingPositionsX[this.indexNos[0]]
         object1.startY = startY
-        object2.startX = startX2
+        object2.startX = startingPositionsX[this.indexNos[1]]
         object2.startY = startY
-        object3.startX = startX3
+        object3.startX = startingPositionsX[this.indexNos[2]]
         object3.startY = startY
 
         // Choose the correct object
-        object1.iscorrect = false
-        object2.iscorrect = false
-        object3.iscorrect = true
+        if(this.indexNos[0] == 0) {
+            object1.iscorrect = true
+            this.correctObject = object1
+        }
+        if(this.indexNos[0] == 1) {
+            object2.iscorrect = true
+            this.correctObject = object2
+        }
+        if(this.indexNos[0] == 2) {
+            object3.iscorrect = true
+            this.correctObject = object3
+        }
 
-        let correctObject = object3
+        
 
         //initialise the number correct
         let numcorrect = 0
@@ -121,8 +141,8 @@ export default class Bonus extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
-                correctObject.setScale(2)
-                correctObject.play(object3anims[3], false);
+                this.correctObject.setScale(2)
+                this.correctObject.play(object3anims[3], false);
                 // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();
                 gameObject.x = charEndX
