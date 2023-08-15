@@ -83,7 +83,7 @@ create()
    
     // this.start.once('pointerdown', () => {
 
-        this.scene.start('bonus',  {
+        this.scene.start('level1',  {
             levels: this.levels,
             currentSublevel: this.currentSublevel,
             firstLevel: true
