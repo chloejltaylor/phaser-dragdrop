@@ -1,21 +1,41 @@
 import Phaser from '../lib/phaser.js'
-import eventsCenter from './eventscentre.js'
 
 export default class level3 extends Phaser.Scene
 {
     timedEvent
-    vehicles = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
-    vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
-    vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
+    vehicles = ['vehicle_ambulance.png', 'vehicle_fire_appliance.png', 'vehicle_police_car.png']
+    vehiclesWin = ['vehicle_ambulance.png', 'vehicle_fire_appliance.png', 'vehicle_police_car.png']
+    vehiclesInteractive = ['vehicle_ambulance.png', 'vehicle_fire_appliance.png', 'vehicle_police_car.png']
     sirens = ['siren-pm', 'siren-ff', 'siren-po']
     characters = ['pm', 'ff', 'po']
-    correctItems = ['item3-correct-pm', 'item3-correct-ff', 'item3-correct-po']
-    incorrectItem1s = [['item1-correct-po', 'item1-correct-ff'],['item1-correct-po', 'item1-correct-pm'], ['item1-correct-pm', 'item1-correct-ff']]
-    incorrectItem2s = [['item2-correct-po', 'item2-correct-ff'],['item2-correct-po', 'item2-correct-pm'], ['item2-correct-pm', 'item2-correct-ff']]
-    incorrectItem3s = ['item3-correct-po', 'item3-correct-po', 'item3-correct-ff']
-    incorrectItem4s = ['item3-correct-ff', 'item3-correct-pm', 'item3-correct-pm']
+    correctItems = ['paramedic_icon_03.png', 'firefighter_icon_03.png', 'police_icon_03.png']
+    incorrectItem1s = [['police_icon_01.png', 'firefighter_icon_01.png'],['police_icon_01.png', 'paramedic_icon_01.png'], ['paramedic_icon_01.png', 'firefighter_icon_01.png']]
+    incorrectItem2s = [['police_icon_02.png', 'firefighter_icon_02.png'],['police_icon_02.png', 'paramedic_icon_02.png'], ['paramedic_icon_02.png', 'firefighter_icon_02.png']]
+    incorrectItem3s = ['police_icon_03.png', 'police_icon_03.png', 'firefighter_icon_03.png']
+    incorrectItem4s = ['firefighter_icon_03.png', 'paramedic_icon_03.png', 'paramedic_icon_03.png']
     
-    docks = ['dock3-pm', 'dock3-ff', 'dock3-po']
+    docks = ['dock_5_paramedic.png', 'dock_5_firefighter.png', 'dock_5_police.png']
+    siren
+    levels
+    currentSublevel
+    firstLevel
+    vehicle
+    vehicleWin
+    vehicleInteractive
+    char
+    correctItem
+    incorrectItem1
+    incorrectItem2
+    incorrectItem3
+    incorrectItem4
+    vehicleObject
+    charanims
+    charObject
+    object1
+    object2
+    object3
+    object4
+    object5
 
     constructor() 
     {
@@ -30,7 +50,6 @@ export default class level3 extends Phaser.Scene
 
     preload()
     {
-        this.scene.run('ui-scene')
     }
 
     create()
@@ -65,12 +84,17 @@ export default class level3 extends Phaser.Scene
 
         // Starting positions of the draggables
 
-        let startY = 750
+        let startY = 748
 
         let startingPositionsX = [300, 500, 700, 900, 1100]
         // console.log(startingPositionsX)
         function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+              }
           }
         shuffle(startingPositionsX)
         console.log(startingPositionsX)
@@ -81,21 +105,21 @@ export default class level3 extends Phaser.Scene
         let startX5 = startingPositionsX[4]
 
         this.add.image(700, 450, 'background')
-        this.vehicleObject = this.add.image(600, 400, this.vehicle)
+        this.vehicleObject = this.add.image(600, 400, 'spritesheet', this.vehicle)
 
                 //set interactive vehicle feature
                 this.vehicleObject.setInteractive().on('pointerdown', pointer =>
                 {
-                    this.vehicleObject.setTexture(this.vehicleInteractive)
+                    this.vehicleObject.setTexture('spritesheet', this.vehicleInteractive)
                     this.sound.play(this.siren)
                     this.time.delayedCall(1000,  changeback, [], this)
                 })
                 function changeback(){
-                    this.vehicleObject.setTexture(this.vehicle)
+                    this.vehicleObject.setTexture('spritesheet', this.vehicle)
                 }
 
         // Place charatcer
-        this.charObject = this.add.spine(1100, 600, this.char).setScale(2)
+        this.charObject = this.add.spine(1135, 600, this.char).setScale(2)
         const charanims = this.charObject.getAnimationList()
 
         // console.log(charanims)
@@ -107,15 +131,15 @@ export default class level3 extends Phaser.Scene
 
 
         //Place dock
-        let dock = this.add.image(700, 750, this.docks[this.currentSublevel])
+        let dock = this.add.image(700, 750, 'spritesheet', this.docks[this.currentSublevel])
 
 
         // Place draggables           
-        this.object1 = this.add.image(startX1, startY, this.correctItem)
-        this.object2 = this.add.image(startX2, startY, this.incorrectItem1)
-        this.object3 = this.add.image(startX3, startY, this.incorrectItem2)
-        this.object4 = this.add.image(startX4, startY, this.incorrectItem3)
-        this.object5 = this.add.image(startX5, startY, this.incorrectItem4)
+        this.object1 = this.add.image(startX1, startY, 'spritesheet', this.correctItem)
+        this.object2 = this.add.image(startX2, startY, 'spritesheet', this.incorrectItem1)
+        this.object3 = this.add.image(startX3, startY, 'spritesheet', this.incorrectItem2)
+        this.object4 = this.add.image(startX4, startY, 'spritesheet', this.incorrectItem3)
+        this.object5 = this.add.image(startX5, startY, 'spritesheet',this.incorrectItem4)
         this.object1.setInteractive({ draggable: true })
         this.object2.setInteractive({ draggable: true })
         this.object3.setInteractive({ draggable: true })
@@ -170,7 +194,7 @@ export default class level3 extends Phaser.Scene
         this.input.on('gameobjectover', (pointer, gameObject) =>
         {
             if(gameObject.objectState){
-                gameObject.setTexture(gameObject.objectstate[1]);
+                gameObject.setTexture('spritesheet', gameObject.objectstate[1]);
             }
             
 
@@ -193,7 +217,8 @@ export default class level3 extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
-                // gameObject.setTexture(gameObject.objectstate[2])
+                // gameObject.setTexture('spritesheet', gameObject.objectstate[2])
+                gameObject.setAlpha(0)
                 gameObject.disableInteractive();
                 gameObject.x = gameObject.endX
                 gameObject.y = gameObject.endY
@@ -203,7 +228,7 @@ export default class level3 extends Phaser.Scene
                 if(numcorrect == totalnumobjects){
                 // Completion animation 
                     this.charObject.play(charanims[3], false)
-                    this.vehicleObject.setTexture(this.vehicleWin)
+                    this.vehicleObject.setTexture('spritesheet', this.vehicleWin)
 
                     this.tweens.add({
                         targets: this.vehicleObject,
@@ -224,7 +249,7 @@ export default class level3 extends Phaser.Scene
 
                 this.sound.play('incorrect')
                 // Set draggable back to idle objectstate
-                gameObject.setTexture(gameObject.objectstate[0]);
+                gameObject.setTexture('spritesheet', gameObject.objectstate[0]);
                 this.tweens.add({
                     targets: gameObject,
                     props: {
@@ -250,7 +275,7 @@ export default class level3 extends Phaser.Scene
 
         playTransition() {
 
-            let continueButton = this.add.image(700, 450, 'continue').setInteractive()
+            let continueButton = this.add.image(700, 450,'spritesheet', 'continue.png').setInteractive()
 
             
                 if(this.currentSublevel==0){

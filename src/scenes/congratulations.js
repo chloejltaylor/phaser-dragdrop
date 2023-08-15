@@ -7,12 +7,15 @@ constructor()
 super('congratulations')
 }
 
+games
+level1games
+level2games
+level3games
+bonusLevels
+levels
 
 preload()
 {
-    this.scene.run('ui-scene')
-    this.load.image('playagain', './src/assets/Buttons/playagain.png')
-    this.load.image('background', './src/assets/Game/grid-bg.png')
 }
 
 create()
@@ -40,7 +43,8 @@ create()
 
     this.input.keyboard.once('keydown-SPACE', () => {this.scene.start('level1ff')})
 
-    const playagain = this.add.image(width * 0.5, height * 0.7, 'playagain').setInteractive()
+
+    const playagain = this.add.image(width * 0.5, height * 0.7, 'spritesheet', 'playagain.png').setInteractive()
 
     playagain.once('pointerdown', () => {
 

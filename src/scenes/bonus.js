@@ -4,13 +4,12 @@ import Phaser from '../lib/phaser.js'
 export default class Bonus extends Phaser.Scene
 {
     timedEvent
-    scenarios = ['vehicle-pm', 'vehicle-ff', 'vehicle-po']
-    // vehiclesWin = ['vehicle-pm-win', 'vehicle-ff-win', 'vehicle-po-win']
-    // vehiclesInteractive = ['vehicle-pm-interactive', 'vehicle-ff-interactive', 'vehicle-po-interactive']
-    // sirens = ['siren-pm', 'siren-ff', 'siren-po']
+    scenariosA = ['scenario1a', 'scenario2a', 'scenario3a']
+    scenariosB = ['scenario1b', 'scenario2b', 'scenario3b']
     characters = ['pm', 'ff', 'po']
     indexNos = [0,1,2]
-
+    mystery
+    scenario
 
     constructor() 
     {
@@ -41,8 +40,8 @@ export default class Bonus extends Phaser.Scene
         console.log(this.indexNos)
 
         // Coordinates of the drop zone
-        let target1posX = 1000
-        let target1posY = 350
+        let target1posX = 400
+        let target1posY = 450
 
         // Space around drop zone that is accepted
         let marginX = 150
@@ -56,18 +55,18 @@ export default class Bonus extends Phaser.Scene
         let startY = 825
 
         //End position of the correct character
-        let charEndX = 1000
+        let charEndX = 400
         let charEndY = 580
 
         //Position images
         this.add.image(700, 450, 'background');
-        this.add.image(700, 750,'dock-bonus')
+        this.add.image(700, 750, 'spritesheet', 'dock_3_bonus.png')
 
         //  Create a 'drop zone'
-        this.add.image(target1posX, target1posY, 'charHitZone')
+        this.mystery = this.add.image(target1posX, target1posY, 'spritesheet', 'bonus-mystery.png')
 
         //image to show who we are trying to match
-        this.add.image(500, 400, this.scenarios[this.indexNos[0]])
+        this.scenario = this.add.image(750, 430,this.scenariosA[this.indexNos[0]]).setScale(0.4)
         
 
         // Place draggables           
@@ -93,19 +92,23 @@ export default class Bonus extends Phaser.Scene
         object3.startY = startY
 
         // Choose the correct object
-        if(this.indexNos[0] == 0) {
-            object1.iscorrect = true
-            this.correctObject = object1
-        }
-        if(this.indexNos[0] == 1) {
-            object2.iscorrect = true
-            this.correctObject = object2
-        }
-        if(this.indexNos[0] == 2) {
-            object3.iscorrect = true
-            this.correctObject = object3
-        }
 
+        //UNCOMMENT WHEN ALL SCENARIOS ARE IN PLACE!!
+
+        // if(this.indexNos[0] == 0) {
+        //     object1.iscorrect = true
+        //     this.correctObject = object1
+        // }
+        // if(this.indexNos[0] == 1) {
+        //     object2.iscorrect = true
+        //     this.correctObject = object2
+        // }
+        // if(this.indexNos[0] == 2) {
+        //     object3.iscorrect = true
+        //     this.correctObject = object3
+        // }
+
+        object2.iscorrect = true
         
 
         //initialise the number correct
@@ -141,8 +144,11 @@ export default class Bonus extends Phaser.Scene
             if ((gameObject.iscorrect) && (x < target1posX+marginX && x > target1posX-marginX) && (y < target1posY+marginY && y > target1posY-marginY))
             {
                 this.sound.play('correct')
-                this.correctObject.setScale(2)
-                this.correctObject.play(object3anims[3], false);
+                this.mystery.setAlpha(0)
+                gameObject.setAlpha(0)
+                this.scenario.setTexture(this.scenariosB[0])
+                // this.correctObject.setScale(-2,2)
+                // this.correctObject.play(object3anims[3], false);
                 // gameObject.setTexture(gameObject.objectstate[2])
                 gameObject.disableInteractive();
                 gameObject.x = charEndX
@@ -153,7 +159,7 @@ export default class Bonus extends Phaser.Scene
                 if(numcorrect == totalnumobjects){
 
                     // Transition scene
-                    this.timedEvent = this.time.delayedCall(2000, this.playTransition, [], this)
+                    this.timedEvent = this.time.delayedCall(4000, this.playTransition, [], this)
                 }
             } 
             else {
